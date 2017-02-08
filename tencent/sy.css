@@ -1,0 +1,227 @@
+/*整体区域*/
+#d0 {
+	margin:0 auto;
+	/*border:1px solid red;*/
+	width:1140px;
+	height:735px;
+	font-size:12px;
+}
+#d1 {
+	margin:0 auto;
+	/*border:1px solid black;*/
+	width:925px;
+	height:735px;
+}
+/*最上部分*/
+#d2 {
+	/*border:1px solid #FF0066;*/
+	width:920px;
+	height:20px;
+	margin-bottom:20px;
+	color:#738197;
+}
+#d2 span {
+	float:right;
+}
+/*偏上部分*/
+#d3 {
+	/*border:1px solid #FF0066;*/
+	width:920px;
+	height:55px;
+	margin-bottom:10px;
+}
+#d3 img {
+	margin:0 380px 0 15px;
+	float:left;
+}
+#d3 span {
+	color:#738197;
+	margin-top:5px;
+	float:left;
+}
+#d3 span span {
+	font-weight:bold;
+}
+/*导航栏部分*/
+#d4 {
+	/*border:1px solid #FF0066;*/
+	width:920px;
+	height:30px;
+	margin-bottom:15px;
+	background:#62A8DB;
+}
+
+.di1 {
+	width:85px;
+	height:28px;
+	background:white;
+	float:left;
+	margin:0 32px 0 55px;
+}
+.di2 {
+	width:106px;
+	height:28px;
+	float:left;
+	color:white;
+	margin-right:50px;
+}
+.di3 {
+	float:right;
+	color:white;
+}
+.di1,.di2,.di3 {
+	/*border:1px solid red;*/
+	font-size:14px;
+	text-align:center;
+	line-height:27px;
+	margin-top:2px;
+	font-weight:bold;
+}
+
+/*中左部分*/
+#d5 {
+	/*border:1px solid #FF0066;*/
+	width:600px;
+	height:200px;
+	float:left;
+	margin-right:40px;
+	margin-bottom:25px;
+}
+/*中右部分*/
+#d6 {
+	/*border:1px solid #FF0066;*/
+	width:280px;
+	height:200px;
+	float:left;
+	margin-bottom:25px;
+}
+#d6 div {
+	font-weight:bold;
+	font-size:15px;
+	border-bottom:2px solid #CCE6F5;
+	width:280px;
+	height:21px;
+}
+#d6 ul {
+	font-size:12px;
+	line-height:23px;
+	padding-left:17px;
+}
+#d6 a:link {
+	text-decoration:none;
+	color:#256392;
+}
+/*下左部分*/
+#d7 {
+	/*border:1px solid #FF0066;*/
+	width:600px;
+	height:345px;
+	float:left;
+	margin-right:30px;
+}
+.div1 {
+	/*border:1px solid red;*/
+	width:600px;
+	height:29px;
+	border-bottom:2px solid #CCE6F5;
+}
+.div1 span {
+	font-size:15px;
+	color:#266392;
+	font-weight:bold;
+	line-height:28px;
+}
+.div1 font {
+	color:#286290;
+	float:right;
+	padding-top:8px;
+}
+.div2 {
+	/*border:1px solid red;*/
+	width:590px;
+	height:50px;
+	margin-bottom:18px;
+}
+.div2 img {
+	float:left;
+}
+.span1 {
+	margin-bottom:15px;
+	/*border:1px solid red;*/
+	position:relative;
+	top:5px;		/*终于利用relative搞定了相对定位问题*/
+}
+.span1 font {
+	font-size:12px;
+	color:#828284;
+}
+.span1 a {
+	font-size:15px;
+	color:#266392;
+	font-weight:bold;
+}
+.span2 {
+	/*border:1px solid red;*/
+	width:107px;
+	height:20px;
+	float:right;
+	position:relative;
+	top:5px;
+}
+.span2 img {
+	float:left;
+}
+.span2 a {
+	color:#286290;
+}
+.div3 {
+	font-size:15px;
+	padding-top:10px;
+}
+/*下右部分*/
+#d8 {
+	/*border:1px solid #FF0066;*/
+	width:280px;
+	height:345px;
+	float:left;
+}
+.iv1 {
+	/*border:1px solid red;*/
+	width:280px;
+	height:20px;
+	border-bottom:2px solid #CCE6F5;  /*利用边框线实现下划线的效果*/
+	margin-bottom:5px;
+	margin-top:9px;
+}
+.iv1 span {
+	font-size:15px;
+	color:#266392;
+	font-weight:bold;
+}
+.iv1 font {
+	color:#286290;
+	float:right;
+}
+.dv1 {
+	/*border:1px solid red;*/
+	width:280px;
+	height:25px;
+}
+.san1 img {
+	float:left;
+}
+.san1 a {
+	color:#286290;
+}
+.san2  {
+	float:right;
+}
+.san2 a {
+	color:#286290;
+	float:right;
+}
+
+
+
+
+
