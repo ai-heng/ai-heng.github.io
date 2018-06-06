@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这两天，照着韩顺平老师的PHP教程，把雇员管理系统代码敲了一遍，在这个过程中，把自己不懂的知识点融入到项目中去学习，我觉得通过这种方式的确有助于帮助自己进步，通过stackOverflow也解决了运行调试过程中出现的一些问题，不过有一些还没有找到解决方案。而我今天呢，希望将这个项目框架以及其中比较重要的一些功能单独拿出来再分析一番，加强自己的印象。">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="雇员管理系统-解析">
+<meta property="og:url" content="http://yoursite.com/2017/07/19/雇员管理系统-解析/index.html">
+<meta property="og:site_name" content="衡仔的技术小窝">
+<meta property="og:description" content="这两天，照着韩顺平老师的PHP教程，把雇员管理系统代码敲了一遍，在这个过程中，把自己不懂的知识点融入到项目中去学习，我觉得通过这种方式的确有助于帮助自己进步，通过stackOverflow也解决了运行调试过程中出现的一些问题，不过有一些还没有找到解决方案。而我今天呢，希望将这个项目框架以及其中比较重要的一些功能单独拿出来再分析一番，加强自己的印象。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post17_1.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post17_2.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post17_3.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post17_4.png">
+<meta property="og:updated_time" content="2018-05-05T15:09:25.206Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="雇员管理系统-解析">
+<meta name="twitter:description" content="这两天，照着韩顺平老师的PHP教程，把雇员管理系统代码敲了一遍，在这个过程中，把自己不懂的知识点融入到项目中去学习，我觉得通过这种方式的确有助于帮助自己进步，通过stackOverflow也解决了运行调试过程中出现的一些问题，不过有一些还没有找到解决方案。而我今天呢，希望将这个项目框架以及其中比较重要的一些功能单独拿出来再分析一番，加强自己的印象。">
+<meta name="twitter:image" content="http://opznmu7n5.bkt.clouddn.com/post17_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/19/雇员管理系统-解析/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>雇员管理系统-解析 | 衡仔的技术小窝</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">衡仔的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/雇员管理系统-解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VitaHeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="衡仔的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">雇员管理系统-解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-07-19 18:10:00" itemprop="dateCreated datePublished" datetime="2017-07-19T18:10:00+08:00">2017-07-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-05 23:09:25" itemprop="dateModified" datetime="2018-05-05T23:09:25+08:00">2018-05-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/07/19/雇员管理系统-解析/" class="leancloud_visitors" data-flag-title="雇员管理系统-解析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这两天，照着<strong>韩顺平</strong>老师的PHP教程，把<strong>雇员管理系统</strong>代码敲了一遍，在这个过程中，把自己不懂的知识点融入到项目中去学习，我觉得通过这种方式的确有助于帮助自己进步，通过<strong>stackOverflow</strong>也解决了运行调试过程中出现的一些问题，不过有一些还没有找到解决方案。而我今天呢，希望将这个<strong>项目框架</strong>以及其中比较重要的一些<strong>功能</strong>单独拿出来再分析一番，加强自己的印象。</p>
+<a id="more"></a>
+<p>首先，我先放一张该项目的整体框架图：<br><img src="http://opznmu7n5.bkt.clouddn.com/post17_1.png" alt=""></p>
+<p>从图中各个类间的关系也可以大致看出，它采用了<strong>分层模式</strong>，将<strong>页面</strong>和<strong>业务逻辑</strong>分离。</p>
+<p>该项目实现的大致功能包括：</p>
+<ul>
+<li>管理员登录系统</li>
+<li>验证用户是否正确</li>
+<li>后台主界面（包括管理、添加、修改、退出系统）</li>
+<li>管理用户界面（实现数据分页功能）</li>
+</ul>
+<p>其中，比较重要的业务逻辑处理是在<strong>登录验证</strong>功能和<strong>数据分页处理</strong>功能，我结合其具体流程大致分析一番。</p>
+<h2 id="登录验证"><a href="#登录验证" class="headerlink" title="登录验证"></a>登录验证</h2><p><strong>大致流程如下：</strong><br><img src="http://opznmu7n5.bkt.clouddn.com/post17_2.png" alt=""></p>
+<p><strong>接收用户输入的数据</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id=$_POST[<span class="string">'id'</span>];</span><br><span class="line">$password=$_POST[<span class="string">'password'</span>];</span><br></pre></td></tr></table></figure>
+<p><strong>从admin表获取对应密码</strong></p>
+<p>这个过程中会涉及到数据库的<strong>连接、查询、释放资源、关闭连接</strong>等等。因为该项目讲解视频是几年前的，他在其中采用的是<strong>mysql库</strong>，不过现在mysql库在<strong>PHP7</strong>中已经被弃用了，所以我将其修改为了<strong>mysqli库</strong>。<br>另外呢，我之前对于php操作mysql库并不是很了解，而通过网上的资料可知，利用mysqli库连接数据库时，有<strong>面向对象</strong>和<strong>面向过程</strong>两种方式，而从我的代码特点来看，应该是<strong>面向过程</strong>连接。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SqlHelper</span>  </span>&#123;</span><br><span class="line">    <span class="keyword">public</span>  $dbname=<span class="string">"empmanage"</span>;                <span class="comment">//数据库名称</span></span><br><span class="line">    <span class="keyword">public</span>  $username=<span class="string">"root"</span>;                   <span class="comment">//用户名</span></span><br><span class="line">    <span class="keyword">public</span>  $password=<span class="string">"XXX"</span>                     <span class="comment">//密码</span></span><br><span class="line">    <span class="keyword">public</span>  $host=<span class="string">"localhost"</span>                   <span class="comment">//主机</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//数据库连接</span></span><br><span class="line">$conn=mysqli_connect(host,username,password,dbname);</span><br><span class="line"><span class="keyword">if</span> (!$conn)  &#123;</span><br><span class="line">    <span class="keyword">die</span> (<span class="string">"connect error"</span>.mysqli_connect_error());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//数据库查询</span></span><br><span class="line"><span class="comment">//根据用户输入的id号从admin表中获取对应的password</span></span><br><span class="line">$sql=<span class="string">"select password form admin where id='$id'"</span>;</span><br><span class="line">$res=mysqli_query($conn,$sql) <span class="keyword">or</span> <span class="keyword">die</span> (mysqli_error());</span><br><span class="line"></span><br><span class="line"><span class="comment">//密码比对</span></span><br><span class="line"><span class="keyword">if</span> ($row=mysqli_fetch_row($res))  &#123;</span><br><span class="line">    <span class="comment">//表明从admin表中查询到password</span></span><br><span class="line">    <span class="keyword">if</span> ($password==$row[<span class="string">'password'</span>])  &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//释放资源并关闭连接</span></span><br><span class="line">mysqli_free_result($res);</span><br><span class="line">mysqli_close($conn);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数据分页处理"><a href="#数据分页处理" class="headerlink" title="数据分页处理"></a>数据分页处理</h2><p><strong>大致流程如下：</strong><br><img src="http://opznmu7n5.bkt.clouddn.com/post17_3.png" alt=""></p>
+<p><strong>计算数据总页数</strong></p>
+<p>在实现这一功能时，需要考虑到以下几个变量：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$pageSize         <span class="comment">//每页显示几条记录(由程序员来定义)</span></span><br><span class="line">$pageNow          <span class="comment">//显示第几页(用户输入)</span></span><br><span class="line">$pageCount        <span class="comment">//一共多少页(需要设计算法实现)</span></span><br><span class="line">$rowCount         <span class="comment">//共有多少行记录(需要从emp表中获取)</span></span><br></pre></td></tr></table></figure>
+<p>计算总页数，也就是计算$pageCount的值，从逻辑上来讲，页数=进一法取整(总记录数/每页显示记录数)，用代码实现即是如下操作。</p>
+<p>关于数据库连接、释放资源与关闭连接功能这里不再赘述、与上面讲到的一致，这里只提及功能实现部分。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//从emp表中获取总行数</span></span><br><span class="line">$sql=<span class="string">"select count(id) from emp"</span>;</span><br><span class="line">$res1=mysqli_query($conn,$sql) <span class="keyword">or</span> <span class="keyword">die</span>(mysqli_error());</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算总页数</span></span><br><span class="line"><span class="keyword">if</span> ($row=mysqli_fetch_row($res))  &#123;</span><br><span class="line">    $pageCount=ceil($row[<span class="number">0</span>]/$pageSize);         <span class="comment">//ceil是"进一取整"函数，正好符合题意</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>确定每页应当显示数据</strong></p>
+<p>之所以定义\$pageSize，就是为了限制每页应当显示的记录数，可以实现将记录分页的效果。另外一个需要考虑的问题是当前页应当从哪一个记录开始显示？<br>我们假设当前页\$pageNow=3,每页显示记录数$pageSize=6。我们执行下面的指令，<br><code>select * from emp limit &quot;12,6&quot;</code></p>
+<ul>
+<li>limit取记录时从0开始计数，其中的<strong>12</strong>表示从第13条记录开始取</li>
+<li>其中的<strong>6</strong>表示向后取出几条记录</li>
+</ul>
+<p>参数1的计算与当前页和每页显示记录数均有关，<br>12=(3-1)<em>6=(\$pageNow-1)\</em>$pageSize.<br>所以通过<code>select * from emp limit &quot;.($pageNow-1)*$pageSize.&quot;,$pageSize</code>就可以正确限制每页显示的数据。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从emp表中获取所有记录，并通过限制手段来实现正确的数据显示</span></span><br><span class="line">$sql=<span class="string">"select * from emp limit "</span>.($pageNow<span class="number">-1</span>)*$pageSize.<span class="string">",$pageSize"</span>;</span><br><span class="line">$res2=mysqli_query($conn,$sql) <span class="keyword">or</span> <span class="keyword">die</span> (mysqli_error());</span><br></pre></td></tr></table></figure>
+<p>当页数和每页应当显示的数据都获取到之后，便可以返回到管理界面empList.php，打印出页面。</p>
+<p><strong>打印管理用户界面</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//打印出表头</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;table width='700px' border='1px'&gt;"</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;tr&gt;&lt;th&gt;id&lt;/th&gt;&lt;th&gt;name&lt;/th&gt;&lt;th&gt;grade&lt;/th&gt;&lt;th&gt;email&lt;/th&gt;&lt;th&gt;salary&lt;/th&gt;&lt;th&gt;删除用户&lt;/th&gt;&lt;th&gt;修改用户&lt;/th&gt;&lt;/tr&gt;"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//传入数据</span></span><br><span class="line"><span class="keyword">for</span> ($i=<span class="number">0</span>;$i&lt;count($res2);$i++)  &#123;</span><br><span class="line">    $row=$res2[$i];</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;tr&gt;&lt;td&gt;&#123;$row['id']&#125;&lt;/td&gt;&lt;td&gt;&#123;$row['name']&#125;&lt;/td&gt;&lt;td&gt;&#123;$row['grade']&#125;&lt;/td&gt;&lt;td&gt;&#123;$row['email']&#125;&lt;/td&gt;&lt;td&gt;&#123;$row['salary']&#125;&lt;/td&gt;&lt;td&gt;&lt;a href='#'&gt;删除用户&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a&gt;修改用户&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//表尾</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;/table&gt;"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//上一页</span></span><br><span class="line"><span class="keyword">if</span> ($pageNow&gt;<span class="number">1</span>)  &#123;</span><br><span class="line">    $perPage=$pageNow<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;a href='empList.php?pageNow=$prePage'&gt;上一页&lt;/a&gt;"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//下一页</span></span><br><span class="line"><span class="keyword">if</span> ($pageNow&lt;$pageCount)  &#123;</span><br><span class="line">    $nextPage=$pageNow+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">echo</span>  <span class="string">"&lt;a href='empList.php?pageNow=$nextPage'&gt;下一页&lt;/a&gt;"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>empList.php界面最终效果图</strong><br><img src="http://opznmu7n5.bkt.clouddn.com/post17_4.png" alt=""></p>
+<p>在这里，我只对其中的部分关键功能进行了分析，完整代码可以参阅<a href="https://github.com/ai-heng/empmanage" target="_blank" rel="noopener">雇员管理系统</a>。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/18/KMP算法/" rel="next" title="KMP算法">
+                <i class="fa fa-chevron-left"></i> KMP算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/21/课后习题-查找/" rel="prev" title="课后习题-查找">
+                课后习题-查找 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjI0OC8xMjc4Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg"
+                alt="VitaHeng" />
+            
+              <p class="site-author-name" itemprop="name">VitaHeng</p>
+              <p class="site-description motion-element" itemprop="description">我们养成习惯，习惯造就我们</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ai-heng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:ai.heng.dev@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Ai-heng.dev/activities" target="_blank" title="知乎"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#登录验证"><span class="nav-number">1.</span> <span class="nav-text">登录验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分页处理"><span class="nav-number">2.</span> <span class="nav-text">数据分页处理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VitaHeng</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+<br/>
+<i class="fa fa-user"></i><span id="busuanzi_container_site_uv">
+  第&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;位访客
+</span>&nbsp;|&nbsp;<i class="fa fa-eye"></i><span id="busuanzi_container_site_pv">
+    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+</span>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>

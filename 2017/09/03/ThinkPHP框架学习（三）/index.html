@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="根据ThinkPHP框架学习（二）中讲到的绝对路径与相对路径设置，将对应的商城模板文件转移到market文件夹后，接下来，就其中涉及到的一些知识点做一番补充总结。">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThinkPHP框架学习（三）">
+<meta property="og:url" content="http://yoursite.com/2017/09/03/ThinkPHP框架学习（三）/index.html">
+<meta property="og:site_name" content="衡仔的技术小窝">
+<meta property="og:description" content="根据ThinkPHP框架学习（二）中讲到的绝对路径与相对路径设置，将对应的商城模板文件转移到market文件夹后，接下来，就其中涉及到的一些知识点做一番补充总结。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post27_1.png">
+<meta property="og:updated_time" content="2018-05-05T15:16:43.706Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ThinkPHP框架学习（三）">
+<meta name="twitter:description" content="根据ThinkPHP框架学习（二）中讲到的绝对路径与相对路径设置，将对应的商城模板文件转移到market文件夹后，接下来，就其中涉及到的一些知识点做一番补充总结。">
+<meta name="twitter:image" content="http://opznmu7n5.bkt.clouddn.com/post27_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/03/ThinkPHP框架学习（三）/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>ThinkPHP框架学习（三） | 衡仔的技术小窝</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">衡仔的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/03/ThinkPHP框架学习（三）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VitaHeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="衡仔的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ThinkPHP框架学习（三）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-09-03 23:40:00" itemprop="dateCreated datePublished" datetime="2017-09-03T23:40:00+08:00">2017-09-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-05 23:16:43" itemprop="dateModified" datetime="2018-05-05T23:16:43+08:00">2018-05-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/09/03/ThinkPHP框架学习（三）/" class="leancloud_visitors" data-flag-title="ThinkPHP框架学习（三）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>根据<a href="http://www.ai-heng.cn/2017/08/10/ThinkPHP%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/#more" target="_blank" rel="noopener">ThinkPHP框架学习（二）</a>中讲到的<strong>绝对路径</strong>与<strong>相对路径</strong>设置，将对应的商城模板文件转移到<strong>market文件夹</strong>后，接下来，就其中涉及到的一些知识点做一番补充总结。</p>
+<a id="more"></a>
+<h1 id="给静态资源文件设置目录访问常量"><a href="#给静态资源文件设置目录访问常量" class="headerlink" title="给静态资源文件设置目录访问常量"></a>给静态资源文件设置目录访问常量</h1><p>前面我们提及到，引入模板文件后，需要调整html文件和css文件的路径关系，再结合tp框架的<strong>路由解析形式</strong>，最后确定了类似<strong>/market/Public/Home/css/style.css</strong>的路径引用形式。但是这里可以进行一番改进，当路径发生变化时，为了便于后期的维护，避免重复地在代码中更改路径位置，可以在入口文件<strong>index.php</strong>中将css、img、js路径定义为常量，在模板中通过常量的形式把静态资源引入。<br>打开<strong>index.php</strong>，在其中添加如下代码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//给静态资源文件访问目录设置常量，方便后期维护</span></span><br><span class="line"><span class="comment">//Home分组</span></span><br><span class="line">define(<span class="string">'CSS_URL'</span>,<span class="string">'/market/Public/Home/css/'</span>);</span><br><span class="line">define(<span class="string">'IMG_URL'</span>,<span class="string">'/market/Public/Home/images/'</span>);</span><br><span class="line">define(<span class="string">'JS_URL'</span>,<span class="string">'/market/Public/Home/js/'</span>);</span><br><span class="line"><span class="comment">//Admin分组</span></span><br><span class="line">define(<span class="string">'A_CSS_URL'</span>,<span class="string">'/market/Public/Admin/css/'</span>);</span><br><span class="line">define(<span class="string">'A_IMG_URL'</span>,<span class="string">'/market/Public/Admin/img/'</span>);</span><br><span class="line">define(<span class="string">'A_JS_URL'</span>,<span class="string">'/market/Public/Admin/js/'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>此时，在模板中引入css文件时，引入形式如下：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//修改前</span></span><br><span class="line">&lt;link href=<span class="string">"/market/Public/Admin/css/mine.css"</span> type=<span class="string">"text/css"</span> rel=<span class="string">"stylesheet"</span> /&gt;</span><br><span class="line"><span class="comment">//修改后</span></span><br><span class="line">&lt;link href=<span class="string">"&lt;?php echo A_CSS_URL; ?&gt;mine.css"</span> type=<span class="string">"text/css"</span> rel=<span class="string">"stylesheet"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p>在<strong>TP框架</strong>中，有几种不同的配置文件，例如在market项目中，与之有关的配置文件如下：</p>
+<ul>
+<li>ThinkPHP/Conf/convention.php            系统主要配置文件，平时不做修改，针对所有项目都起作用</li>
+<li>market/Common/Conf/config.php            当前market项目的配置文件，仅针对market项目起作用</li>
+<li>market/Home/Conf/config.php                当前market项目Home分组的配置文件，仅针对market项目中的Home分组起作用</li>
+</ul>
+<p>对于以上三个配置文件，如果存在同名的配置变量，后者会覆盖前者。</p>
+<p>接下来，针对<strong>market项目</strong>，对其具体做一些配置。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">array</span>(</span><br><span class="line">	<span class="comment">//'配置项'=&gt;'配置值'</span></span><br><span class="line">	</span><br><span class="line">    <span class="comment">//页面底部显示跟踪信息</span></span><br><span class="line">    <span class="string">'SHOW_PAGE_TRACE'</span>   =&gt;<span class="keyword">true</span>,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//默认分组设置</span></span><br><span class="line">    <span class="string">'DEFAULT_MODULE'</span>    =&gt; <span class="string">'Home'</span>, </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//默认模块,访问网站时，若省略分组内容，则填充为默认模块</span></span><br><span class="line">    <span class="string">'MODULE_ALLOW_LIST'</span>    =&gt; <span class="keyword">array</span>(<span class="string">'Home'</span>,<span class="string">'Admin'</span>),    <span class="comment">//定义可供访问的分组列表</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//Smary模板引擎切换</span></span><br><span class="line">    <span class="string">'TMPL_ENGINE_TYPE'</span>      =&gt; <span class="string">'Smarty'</span>,</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>TP框架支持<strong>Smarty模板引擎</strong>，当切换为该引擎之后，对于css、img等静态资源文件的调用需要结合Smarty模板引擎进行设置，<br>此时，在模板中引入css文件时，引入形式如下：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//修改前</span></span><br><span class="line">&lt;link href=<span class="string">"&lt;?php echo A_CSS_URL; ?&gt;mine.css"</span> type=<span class="string">"text/css"</span> rel=<span class="string">"stylesheet"</span> /&gt;</span><br><span class="line"><span class="comment">//修改后</span></span><br><span class="line">&lt;link href=<span class="string">"&#123;$smarty.const.A_CSS_URL&#125;mine.css"</span> type=<span class="string">"text/css"</span> rel=<span class="string">"stylesheet"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>另外，切换为Smarty引擎后，有可能会出现如下错误：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post27_1.png" alt=""><br>其原因在于Smarty模板中的<code>{}</code>与css或js有冲突，有如下几种解决方案：</p>
+<ol>
+<li>在<code>{}</code>与内容中间设置空格</li>
+<li>使<code>{}</code>左右标记换行</li>
+<li>设置{literal}{/literal}标记</li>
+<li>改变Smarty的标记符号</li>
+</ol>
+<h1 id="后台品字形页面搭建"><a href="#后台品字形页面搭建" class="headerlink" title="后台品字形页面搭建"></a>后台品字形页面搭建</h1><p>后台界面使用<strong>frame</strong>标签搭建而成，frame标签的src属性值不能设置相对路径，因为相对地址会受到路由最后一级地址的影响而使得请求有可能失败，所以最好使用绝对路径。设置过绝对路径之后，我们需要考虑同样的问题，即为了便于后期维护和升级，我们可以将路径地址设置为常量。</p>
+<p>TP框架自身提供了一些常量：</p>
+<p>http://网址/index.php/分组/控制器/操作方法/名称/值/名称/值/ </p>
+<p><code>__MODULE__</code>:            路由地址分组信息        (http://网址/index.php/分组)<br><code>__CONTROLLER__</code>:        路由地址控制器信息        (http://网址/index.php/分组/控制器)<br><code>__ACTION__</code>：            路由地址操作方法信息    (http://网址/index.php/分组/控制器/操作方法)<br><code>__SELF__</code>:                路由地址的全部信息       (http://网址/index.php/分组/控制器/操作方法/名称/值/名称/值/ )</p>
+<p><code>MODULE_NAME</code>:            分组名称<br><code>CONTROLIER_NAME</code>:        控制器名称<br><code>ACTION_NAME</code>:            操作方法名称</p>
+<p>根据具体情况，选择相对应的常量去替换路径地址，而且这些常量不需要php的echo输出，会直接变成具体的常量信息，因为tp框架自身有“替换机制”，会将其替换为对应的常量内容。其次，在这里还需要结合Smarty模板语法特征，修改样例如下：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//修改前</span></span><br><span class="line">&lt;frame name=head src=<span class="string">"/market/index.php/Admin/Index/head.html"</span> frameborder=<span class="number">0</span> noresize scrolling=no&gt;</span><br><span class="line"><span class="comment">//修改后</span></span><br><span class="line">&lt;frame name=head src=<span class="string">"&#123;$smarty.const.__CONTROLLER__&#125;/head.html"</span> frameborder=<span class="number">0</span> noresize scrolling=no&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/19/二叉树平衡检查（递归思想分析）/" rel="next" title="二叉树平衡检查（递归思想分析）">
+                <i class="fa fa-chevron-left"></i> 二叉树平衡检查（递归思想分析）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/28/国庆节前小记/" rel="prev" title="国庆节前小记">
+                国庆节前小记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjI0OC8xMjc4Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg"
+                alt="VitaHeng" />
+            
+              <p class="site-author-name" itemprop="name">VitaHeng</p>
+              <p class="site-description motion-element" itemprop="description">我们养成习惯，习惯造就我们</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ai-heng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:ai.heng.dev@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Ai-heng.dev/activities" target="_blank" title="知乎"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#给静态资源文件设置目录访问常量"><span class="nav-number">1.</span> <span class="nav-text">给静态资源文件设置目录访问常量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件"><span class="nav-number">2.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后台品字形页面搭建"><span class="nav-number">3.</span> <span class="nav-text">后台品字形页面搭建</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VitaHeng</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+<br/>
+<i class="fa fa-user"></i><span id="busuanzi_container_site_uv">
+  第&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;位访客
+</span>&nbsp;|&nbsp;<i class="fa fa-eye"></i><span id="busuanzi_container_site_pv">
+    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+</span>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>

@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="写在前面的话  这两天呢，关于计算机网络、Java以及数据结构方面，自己都整理总结了一番简单的知识点，马上就要考试了，所以就此方式大概复习了一下，祝自己考试顺利QAQ">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础知识">
+<meta property="og:url" content="http://yoursite.com/2017/07/02/Java基础知识/index.html">
+<meta property="og:site_name" content="衡仔的技术小窝">
+<meta property="og:description" content="写在前面的话  这两天呢，关于计算机网络、Java以及数据结构方面，自己都整理总结了一番简单的知识点，马上就要考试了，所以就此方式大概复习了一下，祝自己考试顺利QAQ">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-05T15:07:41.454Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础知识">
+<meta name="twitter:description" content="写在前面的话  这两天呢，关于计算机网络、Java以及数据结构方面，自己都整理总结了一番简单的知识点，马上就要考试了，所以就此方式大概复习了一下，祝自己考试顺利QAQ">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/02/Java基础知识/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Java基础知识 | 衡仔的技术小窝</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">衡仔的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/02/Java基础知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VitaHeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="衡仔的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java基础知识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-07-02 22:00:00" itemprop="dateCreated datePublished" datetime="2017-07-02T22:00:00+08:00">2017-07-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-05 23:07:41" itemprop="dateModified" datetime="2018-05-05T23:07:41+08:00">2018-05-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/07/02/Java基础知识/" class="leancloud_visitors" data-flag-title="Java基础知识">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>写在前面的话</strong></p>
+</blockquote>
+<p>这两天呢，关于<strong>计算机网络、Java以及数据结构</strong>方面，自己都整理总结了一番简单的知识点，马上就要考试了，所以就此方式大概复习了一下，祝自己考试顺利QAQ</p>
+<a id="more"></a>
+<blockquote>
+<p><strong>正文</strong></p>
+</blockquote>
+<h1 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h1><h2 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h2><p>抽象就是忽略问题中与当前目标无关的那些方面，以便更充分地注意与当前目标有关的方面。<br>使用关键字<strong>abstract</strong>来定义抽象类。</p>
+<ul>
+<li><strong>过程抽象：</strong> 将整个系统的功能划分为若干部分，强调功能完成的过程和步骤，而隐蔽其具体的实现。</li>
+<li><strong>数据抽象：</strong> 将系统中需要处理的数据和这些数据上的操作结合在一起，抽象成不同的抽象数据类型，每个抽象数据类型既包含了数据，也包含了针对这些数据的操作。</li>
+</ul>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>允许创建者规定一个类的基本形式：方法名、自变量列表以及返回类型，但不规定方法主体，接口也包含了数据成员，但它们都默认为static和final，接口只提供一种形式，并不提供实施的细节。<br>使用关键字<strong>interface</strong>来声明接口，<strong>implements</strong>来实现接口。</p>
+<h2 id="接口和抽象类的区别"><a href="#接口和抽象类的区别" class="headerlink" title="接口和抽象类的区别"></a>接口和抽象类的区别</h2><ul>
+<li>接口中的所有方法都是抽象的，而抽象类可以同时包含抽象和非抽象的方法。</li>
+<li>类可以实现很多接口，但只能继承一个抽象类。</li>
+<li>接口中的成员函数默认是public的，抽象类的成员函数可以说private，protected或者public。</li>
+<li>从设计层面来说，抽象是对类的抽象，是一种模板设计，接口是行为的抽象，是一种行为的规范。</li>
+<li>接口中声明的变量默认都是final的，抽象类可以包含非final的变量。</li>
+</ul>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>封装是一种信息隐蔽技术，利用抽象数据类型将数据和基于数据的操作封装在一起，目的在于将对象的使用者和设计组分开，使使用者不必知道行为实现的细节，只需使用设计者提供的消息来访问对象。</p>
+<ul>
+<li>清楚的边界，所有对象的内部信息被限定在这个边界内。</li>
+<li>接口，即对象对外界提供的方法，外界可以通过这些方法与对象进行交互。</li>
+<li>受保护的内部实现，即软件对象功能的实现细节，实现细节不能从类外访问。</li>
+</ul>
+<h1 id="图像化界面"><a href="#图像化界面" class="headerlink" title="图像化界面"></a>图像化界面</h1><h2 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h2><ul>
+<li>掌握图形用户界面程序的编程方法、思路，学会在Applet和Application中引入图形用户界面</li>
+<li>了解Java的图形环境，绘制简单图形</li>
+<li>掌握Swing的结构和特点，学会使用布局管理、事件处理，以及常用的Swing组件</li>
+</ul>
+<h2 id="Applet的概念及基本方法"><a href="#Applet的概念及基本方法" class="headerlink" title="Applet的概念及基本方法"></a>Applet的概念及基本方法</h2><p>它一种嵌入html文档中的Java程序。<br>一个applet程序需要继承javax.swing包中的JApplet类，也可以继承老的awt组件中的Applet类，JApplet类属于新的Swing组件。</p>
+<h2 id="Java的绘图机制，及实现更为出色绘图效果的Java-2D"><a href="#Java的绘图机制，及实现更为出色绘图效果的Java-2D" class="headerlink" title="Java的绘图机制，及实现更为出色绘图效果的Java 2D"></a>Java的绘图机制，及实现更为出色绘图效果的Java 2D</h2><p>Graphics对象专门管理图形环境，Graphics是一个抽象类，与平台无关。<br>Java 2D API提供了高级的二维图形功能。</p>
+<h2 id="Swing的结构层次、布局管理，以及如何为其编写事件处理程序"><a href="#Swing的结构层次、布局管理，以及如何为其编写事件处理程序" class="headerlink" title="Swing的结构层次、布局管理，以及如何为其编写事件处理程序"></a>Swing的结构层次、布局管理，以及如何为其编写事件处理程序</h2><p> JFame和JApplet都是Swing组件，分别代表窗口组件和Applet容器组件。<br> JFC是关于GUI组件和服务的完整集合， 主要包括：AWT/Java2D/Accessibility/Drag&amp;Drop/Swing。</p>
+<p>通常将javax.swing包里的Swing组件归为三个层次：顶层容器、中间层容器、原子组件。</p>
+<ul>
+<li><strong>顶层容器：</strong> JFrame(实现单个主窗口)、JDialog(实现一个二级窗口，即对话框)、JApplet(在浏览器窗口中实现一个applet显示区域)</li>
+<li><strong>中间层容器：</strong> 分为一般用途的(JPanel/ JScrollPane/…)和特殊用途的(JintermalFrame/JRootPane)</li>
+<li><strong>原子组件：</strong> 是在图形用户界面中和用户进行交互的组件。分为三类，包括显示不可 编辑信息的Jlabel…有控制功能、可以用来输入信息的JButton…能提供格式化的信息并允许用户选择的JColorChooser</li>
+</ul>
+<p>布局管理器能够将下级组件有秩序地摆在上一级容器中，使用关键字<strong>setLayout</strong>。</p>
+<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>GUI是由事件驱动的，一些常见的事件包括：<br>移动鼠标、单双击鼠标各个按钮、单击按钮、拖动滚动条、关闭窗口…</p>
+<p>编写事件处理程序时，需要注意<strong>事件源、事件监听器、事件对象</strong>。</p>
+<p>很多Swing组件都要使用的特色如Action对象、边框、外观风格、线程、定时器等。</p>
+<h1 id="常考面试题"><a href="#常考面试题" class="headerlink" title="常考面试题"></a>常考面试题</h1><h2 id="Java虚拟机"><a href="#Java虚拟机" class="headerlink" title="Java虚拟机"></a>Java虚拟机</h2><p><strong>Java虚拟机(Java Virtual Machine/JVM)</strong>是一个可以执行Java字节码的虚拟机进程，它有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。JVM屏蔽了与具体操作系统平台相关的信息，使得Java程序只需生成在Java虚拟机上运行的字节码，就可以在多种平台上不加修改地运行。</p>
+<h2 id="JRE-与-JDK"><a href="#JRE-与-JDK" class="headerlink" title="JRE 与 JDK"></a>JRE 与 JDK</h2><ul>
+<li><strong>JRE：</strong>(Java Runtime Environment)，是Java运行环境，包含了Java虚拟机，Java基础类库，是使用Java语言编写程序所需要的软件环境。</li>
+<li><strong>JDK：</strong>(Java Development Kit)，是Java开发工具包，包含了JRE，编译器和其他的工具，可以让开发者开发、编译、执行Java应用程序。</li>
+</ul>
+<h2 id="方法覆盖和方法重载"><a href="#方法覆盖和方法重载" class="headerlink" title="方法覆盖和方法重载"></a>方法覆盖和方法重载</h2><ul>
+<li><strong>方法重写(Overriding)：</strong>是说子类重新定义了父类的方法，方法重写必须有相同的方法名，参数列表和返回类型。</li>
+<li><strong>方法重载(Overloading)：</strong>是发生在同一个类里面的两个或多个方法的方法名相同但参数不同的情况。</li>
+</ul>
+<p>两者的不同点在于：</p>
+<ul>
+<li>方法重写要求参数列表必须一致，而方法重载要求参数列表必须不一致。</li>
+<li>方法重写要求返回类型必须一致，而方法重载对此没有要求。</li>
+<li>方法重写只能用于子类重写 父类的方法，而方法重载用于同一个类中的所有方法。</li>
+<li>方法重写对方法的访问权限和抛出的异常有特殊的要求，而方法重载 在这方面没有任何限制。</li>
+<li>父类的一个方法只能被子类重写一次，而一个方法可以在所有的类中被重载多次。</li>
+<li>重写是运行时多态，重载是编译时多态。</li>
+</ul>
+<h2 id="构造函数的特点"><a href="#构造函数的特点" class="headerlink" title="构造函数的特点"></a>构造函数的特点</h2><ul>
+<li>方法名和类名相同</li>
+<li>没有返回类型（修饰符void也不能有）</li>
+<li>通常被声明为公有的(public)</li>
+<li>可以有任意多个参数</li>
+<li>主要作用是完成对象的初始化工作</li>
+<li>不能在程序中显式地调用</li>
+<li>在生成一个对象时，系统会自动调用该类的构造方法为新生成的对象初始化</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/29/计算机网络知识点/" rel="next" title="计算机网络知识点">
+                <i class="fa fa-chevron-left"></i> 计算机网络知识点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/16/大二暑假/" rel="prev" title="大二暑假">
+                大二暑假 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjI0OC8xMjc4Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg"
+                alt="VitaHeng" />
+            
+              <p class="site-author-name" itemprop="name">VitaHeng</p>
+              <p class="site-description motion-element" itemprop="description">我们养成习惯，习惯造就我们</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ai-heng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:ai.heng.dev@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Ai-heng.dev/activities" target="_blank" title="知乎"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#类与对象"><span class="nav-number">1.</span> <span class="nav-text">类与对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象"><span class="nav-number">1.1.</span> <span class="nav-text">抽象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口"><span class="nav-number">1.2.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口和抽象类的区别"><span class="nav-number">1.3.</span> <span class="nav-text">接口和抽象类的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封装"><span class="nav-number">1.4.</span> <span class="nav-text">封装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像化界面"><span class="nav-number">2.</span> <span class="nav-text">图像化界面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#要求"><span class="nav-number">2.1.</span> <span class="nav-text">要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Applet的概念及基本方法"><span class="nav-number">2.2.</span> <span class="nav-text">Applet的概念及基本方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java的绘图机制，及实现更为出色绘图效果的Java-2D"><span class="nav-number">2.3.</span> <span class="nav-text">Java的绘图机制，及实现更为出色绘图效果的Java 2D</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swing的结构层次、布局管理，以及如何为其编写事件处理程序"><span class="nav-number">2.4.</span> <span class="nav-text">Swing的结构层次、布局管理，以及如何为其编写事件处理程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件处理"><span class="nav-number">2.5.</span> <span class="nav-text">事件处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常考面试题"><span class="nav-number">3.</span> <span class="nav-text">常考面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java虚拟机"><span class="nav-number">3.1.</span> <span class="nav-text">Java虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JRE-与-JDK"><span class="nav-number">3.2.</span> <span class="nav-text">JRE 与 JDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法覆盖和方法重载"><span class="nav-number">3.3.</span> <span class="nav-text">方法覆盖和方法重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数的特点"><span class="nav-number">3.4.</span> <span class="nav-text">构造函数的特点</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VitaHeng</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+<br/>
+<i class="fa fa-user"></i><span id="busuanzi_container_site_uv">
+  第&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;位访客
+</span>&nbsp;|&nbsp;<i class="fa fa-eye"></i><span id="busuanzi_container_site_pv">
+    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+</span>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>

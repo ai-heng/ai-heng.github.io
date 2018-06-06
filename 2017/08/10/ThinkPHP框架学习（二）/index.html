@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在上一节中，我主要讲到了如何获取ThinkPHP框架，以及虚拟目录和虚拟主机的配置。准备工作完成之后，就可以利用ThinkPHP去部署项目了。">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThinkPHP框架学习（二）">
+<meta property="og:url" content="http://yoursite.com/2017/08/10/ThinkPHP框架学习（二）/index.html">
+<meta property="og:site_name" content="衡仔的技术小窝">
+<meta property="og:description" content="在上一节中，我主要讲到了如何获取ThinkPHP框架，以及虚拟目录和虚拟主机的配置。准备工作完成之后，就可以利用ThinkPHP去部署项目了。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/tp_8.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/tp_7.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/tp_10.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/TP_12.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/tp_11.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/tp_13.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/tp_14.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/tp_15.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/tp_16.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/tp_17.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/tp_18.png">
+<meta property="og:updated_time" content="2018-05-05T15:13:34.424Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ThinkPHP框架学习（二）">
+<meta name="twitter:description" content="在上一节中，我主要讲到了如何获取ThinkPHP框架，以及虚拟目录和虚拟主机的配置。准备工作完成之后，就可以利用ThinkPHP去部署项目了。">
+<meta name="twitter:image" content="http://opznmu7n5.bkt.clouddn.com/tp_8.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/10/ThinkPHP框架学习（二）/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>ThinkPHP框架学习（二） | 衡仔的技术小窝</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">衡仔的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/10/ThinkPHP框架学习（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VitaHeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="衡仔的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ThinkPHP框架学习（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-10 07:30:00" itemprop="dateCreated datePublished" datetime="2017-08-10T07:30:00+08:00">2017-08-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-05 23:13:34" itemprop="dateModified" datetime="2018-05-05T23:13:34+08:00">2018-05-05</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/10/ThinkPHP框架学习（二）/" class="leancloud_visitors" data-flag-title="ThinkPHP框架学习（二）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在上一节中，我主要讲到了如何获取<strong>ThinkPHP框架</strong>，以及<strong>虚拟目录</strong>和<strong>虚拟主机</strong>的配置。准备工作完成之后，就可以利用<strong>ThinkPHP</strong>去部署项目了。</p>
+<a id="more"></a>
+<p>先在工作目录（D:/zend/workspace）下新建一个<strong>market</strong>文件夹，用来部署项目，在<strong>market</strong>文件下再新建一个<strong>index.php</strong>，作为项目的<strong>入口文件</strong>。因为我们需要调用<strong>ThinkPHP框架</strong>，打开自己下载好的ThinkPHP框架文件，将其中的<strong>ThinkPHP文件夹</strong>(其他的Application、Public等均不需要)复制一份到<strong>D:/zend/workspace</strong>目录下（与market文件夹同级，因为ThinkPHP框架可以支持多个项目调用，不仅限于这一个项目），利用<strong>zend studio</strong>打开<strong>index.php</strong>，去引入框架的核心程序。</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/tp_8.png" alt=""></p>
+<blockquote>
+<p>这里用到了<strong>相对路径</strong>知识， <code>../</code>表示上一级目录，后面会介绍到</p>
+</blockquote>
+<p>之后，在浏览器中输入<strong><a href="http://www.myweb.com/market" target="_blank" rel="noopener">www.myweb.com/market</a></strong>，出现如下效果，则说明框架引入成功。</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/tp_7.png" alt=""><br>当框架引入成功之后，<strong>market</strong>文件夹会自动生成3个文件夹，如下图：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/tp_10.png" alt=""><br>其中<strong>Home</strong>文件夹下的内容如下：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/TP_12.png" alt=""><br>接下来即利用<strong>Home文件夹</strong>去部署<strong>雍达商城</strong>前端页面。<strong>雍达商城</strong>前端页面主要包括如下几个部分：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/tp_11.png" alt=""><br>选取其中的几个页面为例，根据其功能的不同，在<strong>Home文件夹</strong>中创建<strong>控制器</strong>和对应的<strong>视图</strong>文件，引入相应的文件，最后效果如下图：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/tp_13.png" alt=""><br>具体实现流程不再细致讲解，对于其中的一些注意事项进行分析。</p>
+<h1 id="相对路径和绝对路径"><a href="#相对路径和绝对路径" class="headerlink" title="相对路径和绝对路径"></a>相对路径和绝对路径</h1><p>引入模板文件后，原先<strong>html文件</strong>和<strong>css文件</strong>之间的相对路径关系会发生改变，需要考虑如何去进行调整，使css样式正确显示（包括图片也是一样的道理），这时就需要考虑<strong>相对路径</strong>和<strong>绝对路径</strong>问题了。</p>
+<blockquote>
+<p><strong>绝对路径</strong>就是文件的真正存在的路径，是指从硬盘的根目录开始，进行一级级目录指向文件。<br><strong>相对路径</strong>就是以当前文件为基准进行一级级目录指向被引用的资源文件。</p>
+</blockquote>
+<ul>
+<li><code>../</code>表示当前文件所在的目录的上一级目录</li>
+<li><code>./</code>表示当前文件所在的目录（所以可以省略不写）</li>
+<li><code>/</code>表示当前<strong>站点</strong>的根目录（域名映射的硬盘目录）（我们一会儿会用到）</li>
+</ul>
+<p>就拿这个项目为例，当我把前台模板文件都移植到<strong>market</strong>文件后，需要对html、css、img之间的相对路径关系进行调整，以其中的<strong>inex.html</strong>为例，原始样式如下：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/tp_14.png" alt=""><br>而移植到<strong>market</strong>文件后，变成了如下效果：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/tp_15.png" alt=""><br>可以看出，html文件正常显示，但是css样式和图片没有正常显示，其中的相对路径关系从目录结构中可以看出</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/tp_16.png" alt=""></p>
+<p><strong>index.html</strong>文件所在的<strong>绝对路径</strong>为：D:/zend/workspace/market/Home/View/Index/index.html<br><strong>style.css</strong>文件所在的<strong>绝对路径</strong>为：D:/zend/workspace/market/Public/Home/css/style.css<br>如何才能在<strong>index.html</strong>文件中正确引用<strong>style.css</strong>文件？</p>
+<ul>
+<li>若利用<strong>相对路径</strong>，以<strong>index.html</strong>为基准，正确的引用方式为：<strong>../../../Public/Home/css/style.css</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:left">含义</th>
+<th style="text-align:center">当前路径地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">../</td>
+<td style="text-align:left">上一级目录</td>
+<td style="text-align:center">D:/zend/workspace/market/Home/View/…</td>
+</tr>
+<tr>
+<td style="text-align:center">../../</td>
+<td style="text-align:left">上上级目录</td>
+<td style="text-align:center">D:/zend/workspace/market/Home/…</td>
+</tr>
+<tr>
+<td style="text-align:center">../../../</td>
+<td style="text-align:left">上上上级目录</td>
+<td style="text-align:center">D:/zend/workspace/market/…</td>
+</tr>
+</tbody>
+</table>
+<p>根据<strong>index.html</strong>和<strong>style.css</strong>的绝对路径地址以及表格分析，我们可以看出当跳了三级目录（../../../）时，可以正确地去引用<strong>style.css</strong></p>
+<p><strong>../../../Public/Home/css/style.css   &lt;=&gt;   D:/zend/workspace/market/Public/Home/css/style.css</strong></p>
+<ul>
+<li>若利用<strong>绝对路径</strong>，正确的引用方式为<strong>D:/zend/workspace/market/Public/Home/css/style.css</strong></li>
+</ul>
+<p>同样地，css样式调整好之后，还需要调整<strong>html文件</strong>与<strong>img</strong>之间的引用关系。<br><strong>index.html</strong>文件所在的<strong>绝对路径</strong>为：D:/zend/workspace/market/Home/View/Index/index.html<br>很多图片都存储在<strong>images</strong>文件夹下，而<strong>images</strong>文件所在的<strong>绝对路径</strong>为：D:/zend/workspace/market/Public/Home/images</p>
+<ul>
+<li>若利用<strong>相对路径</strong>，以<strong>index.html</strong>为基准，正确的引用方式为：<strong>../../../Public/Home/images/XXX.jpg</strong></li>
+<li>若利用<strong>绝对路径</strong>，正确的引用方式为<strong>D:/zend/workspace/market/Public/Home/images/XXX.jpg</strong></li>
+</ul>
+<h1 id="路由解析"><a href="#路由解析" class="headerlink" title="路由解析"></a>路由解析</h1><p>ThinkPHP框架的URL地址可以有以下四种形式：</p>
+<ol>
+<li><strong>基本get形式：</strong> http://网站/index.php?m=分组&amp;c=控制器&amp;a=操作方法</li>
+<li><strong>pathinfo路径形式：</strong> http://网址/index.php/分组/控制器/操作方法</li>
+<li><strong>rewrite重写形式（伪静态技术）：</strong> 省略index.php入口文件：http://网站/分组/控制器/操作方法</li>
+<li><strong>兼容形式：</strong> http://网址/index.php?s=/分组/控制器/操作方法</li>
+</ol>
+<p>前面我们讲到了一般情况下是如何进行<strong>绝对路径</strong>和<strong>相对路径</strong>的调整，而结合<strong>TP框架</strong>进行设置时，我们还需要遵循一定的规则，根据路由形式选择的不同，可能会造成一定的影响。</p>
+<ul>
+<li><p>当我们采用<strong>pathinfo路径形式</strong>去访问页面时，如果我们希望利用<strong>相对路径</strong>的形式去引用css或者图片，上面讲到的路径形式是没有问题的，因为这时<strong>它是以index.html为基准去引用style.css</strong></p>
+</li>
+<li><p>当采用<strong>基本get形式</strong>去访问页面时，如果我们希望采用<strong>相对路径</strong>的形式去引用css或者图片，这时<strong>它并不是以index.html为基准，而是以项目的入口文件index.php为基准</strong>，所以如果还按照上面讲到的路径形式去设置的话，就会出现问题。</p>
+</li>
+</ul>
+<p><strong>index.php</strong>的<strong>绝对路径</strong>为D:/zend/workspace/market/index.php<br>正确的引用路径为：<strong>./Public/Home/css/style.css</strong>(<code>./</code>表示当前目录，可以省去)，而不是上面讲到的<strong>../../../Public/Home/css/style.css</strong>。</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/tp_17.png" alt=""><br><img src="http://opznmu7n5.bkt.clouddn.com/tp_18.png" alt=""></p>
+<p>为了避免这类问题的出现，我们可以采用<strong>绝对路径</strong>，但不采用上面讲到的方式。<br>我们在前面提及到<strong><code>/</code> 表示当前站点的根目录（域名映射的硬盘目录）</strong>，即我们之前设置的虚拟目录位置<strong>D:/zend/workspace</strong>，<code>/</code>就等价于该地址，所以利用这种方式，正确的引用路径为：<strong>/market/Public/Home/css/style.css</strong>.<br>对于图片的引用也是一样的道理，这里不再赘述。这样一来，<strong>index.html</strong>对于<strong>css样式</strong>和<strong>img</strong>的引用就完成了，其他页面的引用均类似，进行一番调整便可以正确引入css和图片。</p>
+<p>某些css样式里也有图片，在引入图片时，可以使用相对路径，它是以css文件自身为基准，与其他文件没有关系。</p>
+<blockquote>
+<p><strong>注：</strong>以上内容仅是我看过视频教程后个人的一些理解，可能会有不当之处，望理解:)…</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/09/ThinkPHP框架学习（一）/" rel="next" title="ThinkPHP框架学习（一）">
+                <i class="fa fa-chevron-left"></i> ThinkPHP框架学习（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/17/遍历二叉树（递归与非递归）/" rel="prev" title="遍历二叉树（递归与非递归）">
+                遍历二叉树（递归与非递归） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjI0OC8xMjc4Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg"
+                alt="VitaHeng" />
+            
+              <p class="site-author-name" itemprop="name">VitaHeng</p>
+              <p class="site-description motion-element" itemprop="description">我们养成习惯，习惯造就我们</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ai-heng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:ai.heng.dev@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Ai-heng.dev/activities" target="_blank" title="知乎"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相对路径和绝对路径"><span class="nav-number">1.</span> <span class="nav-text">相对路径和绝对路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由解析"><span class="nav-number">2.</span> <span class="nav-text">路由解析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VitaHeng</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+<br/>
+<i class="fa fa-user"></i><span id="busuanzi_container_site_uv">
+  第&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;位访客
+</span>&nbsp;|&nbsp;<i class="fa fa-eye"></i><span id="busuanzi_container_site_pv">
+    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+</span>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>

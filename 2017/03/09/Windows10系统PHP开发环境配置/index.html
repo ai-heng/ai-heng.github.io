@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Windows下搭建（Apache+PHP+MySQL）=&amp;gt;WAMP Linux下搭建（Apache+PHP+MySQL）  =&amp;gt;LAMP   PHP开发环境配置一般有套件安装和自定义安装两种方式。网上也能够找到套件，可以直接下载一整套开发环境，省去了配置的过程，不过这种方式灵活性不够高，我们也不能了解其中的关系，试着自己动手去配置一下环境，还是有点好处的，我下面详细介绍的是Win">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows10系统PHP开发环境配置">
+<meta property="og:url" content="http://yoursite.com/2017/03/09/Windows10系统PHP开发环境配置/index.html">
+<meta property="og:site_name" content="衡仔的技术小窝">
+<meta property="og:description" content="Windows下搭建（Apache+PHP+MySQL）=&amp;gt;WAMP Linux下搭建（Apache+PHP+MySQL）  =&amp;gt;LAMP   PHP开发环境配置一般有套件安装和自定义安装两种方式。网上也能够找到套件，可以直接下载一整套开发环境，省去了配置的过程，不过这种方式灵活性不够高，我们也不能了解其中的关系，试着自己动手去配置一下环境，还是有点好处的，我下面详细介绍的是Win">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post2_1.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post2_2.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post2_3.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post2_4.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post2_5.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/phpenvir.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/phpenvir2.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/phpenvir6.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post2_6.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post2_7.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/phpenvir7.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post2_9.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post2_10.png">
+<meta property="og:updated_time" content="2018-05-05T14:51:24.527Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows10系统PHP开发环境配置">
+<meta name="twitter:description" content="Windows下搭建（Apache+PHP+MySQL）=&amp;gt;WAMP Linux下搭建（Apache+PHP+MySQL）  =&amp;gt;LAMP   PHP开发环境配置一般有套件安装和自定义安装两种方式。网上也能够找到套件，可以直接下载一整套开发环境，省去了配置的过程，不过这种方式灵活性不够高，我们也不能了解其中的关系，试着自己动手去配置一下环境，还是有点好处的，我下面详细介绍的是Win">
+<meta name="twitter:image" content="http://opznmu7n5.bkt.clouddn.com/post2_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/09/Windows10系统PHP开发环境配置/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Windows10系统PHP开发环境配置 | 衡仔的技术小窝</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">衡仔的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/09/Windows10系统PHP开发环境配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VitaHeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="衡仔的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Windows10系统PHP开发环境配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-03-09 19:07:00" itemprop="dateCreated datePublished" datetime="2017-03-09T19:07:00+08:00">2017-03-09</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-05 22:51:24" itemprop="dateModified" datetime="2018-05-05T22:51:24+08:00">2018-05-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/03/09/Windows10系统PHP开发环境配置/" class="leancloud_visitors" data-flag-title="Windows10系统PHP开发环境配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<ul>
+<li>Windows下搭建（Apache+PHP+MySQL）=&gt;WAMP</li>
+<li>Linux下搭建（Apache+PHP+MySQL）  =&gt;LAMP</li>
+</ul>
+</blockquote>
+<p>PHP开发环境配置一般有<strong>套件安装</strong>和<strong>自定义安装</strong>两种方式。网上也能够找到套件，可以直接下载一整套开发环境，省去了配置的过程，不过这种方式灵活性不够高，我们也不能了解其中的关系，试着自己动手去配置一下环境，还是有点好处的，我下面详细介绍的是<strong>Windows10系统下自定义安装PHP开发环境</strong>。</p>
+<a id="more"></a>
+<p><strong>8/5：</strong> 稍微修改了一番，同步发到了<a href="http://www.cnblogs.com/Ai-heng/p/7289241.html" target="_blank" rel="noopener">博客园</a></p>
+<p>建议将这几款软件安装到同一个文件夹中，便于管理，我这里都放到了<strong>phpenvir文件夹</strong>中；另外，每安装完一个软件，便进行测试是否安装成功。</p>
+<p>我接下来的安装顺序为：<strong>Apache→PHP→MySQL</strong> </p>
+<h1 id="Apache安装"><a href="#Apache安装" class="headerlink" title="Apache安装"></a>Apache安装</h1><p>官网下载链接:  <a href="http://httpd.apache.org/docs/current/platform/windows.html#down" target="_blank" rel="noopener">点击此处下载</a></p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post2_1.png" alt=""></p>
+<p>下面有几个下载链接，可以自行选择。我选用了第二种方式进行下载。</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post2_2.png" alt=""></p>
+<p>根据自己的电脑配置选择32位或者64位。下载完成后，解压文件。接下来，打开解压后的文件，找到<code>conf</code>目录下的<code>http.conf</code>文件，利用文本编译器（例如<strong>Editplus</strong>）打开， <code>Ctrl+F</code></p>
+<pre><code>ServerRoot &quot;C:/Apache24&quot;
+</code></pre><p>将文件目录地址修改为你的安装位置，例如我安装到了如下位置：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post2_3.png" alt=""></p>
+<p>所以我这里应该将其改为：</p>
+<pre><code>D:/phpenvir/Apache2.4.25
+</code></pre><blockquote>
+<p>这里需要注意一点：目录斜杠的符号应该是<code>/</code>或者<code>\\</code>。</p>
+</blockquote>
+<p>在该文件中继续<code>Crtl+F</code>，找到下面的代码：</p>
+<pre><code>#
+DocumentRoot &quot;c:/Apache24/htdocs&quot;
+&lt;Directory&quot;c:/Apache24/htdocs&quot;&gt;
+#
+</code></pre><p>与上面的做法相同，根据自己的安装位置自行修改：</p>
+<pre><code>#
+DocumentRoot &quot;D:/phpenvir/Apache2.4.25/htdocs&quot;
+&lt;Directory&quot;D:/phpenvir/Apache2.4.25/htdocs&quot;&gt;
+#
+</code></pre><p>改好之后<strong>保存</strong>文件。</p>
+<p>接下来，利用<strong>管理员身份</strong>（这里一定要<strong>注意</strong>，要通过管理员身份运行，刚开始配置的时候在这里出了错，导致了错误产生）打开<strong>命令提示符</strong>，切换到<strong>Apache</strong>目录下的<strong>bin</strong>目录，执行安装程序 <code>httpd -k install</code>.</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post2_4.png" alt=""></p>
+<p>它会提示你Apache服务安装成功。紧接着输入<code>httpd –k start</code>来启动Apache服务。</p>
+<p><strong>测试</strong>：在浏览器中输入：<a href="http://localhost" target="_blank" rel="noopener">http://localhost</a>, 如果出现下图页面，则表示Apache安装成功。</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post2_5.png" alt=""></p>
+<p><strong>小技巧：</strong></p>
+<ul>
+<li>在切换到<strong>Apache</strong>目录下<strong>bin文件夹</strong>的过程中，可以利用上面讲到的那种方法，另外，还可以先在本地打开<strong>bin文件</strong>所在的位置，然后按住<code>shift</code>键的同时点击鼠标右键，列表中会有一项<strong>在此处打开命令窗口</strong>，点击打开命令提示符，即可直接定位到该位置，省去了切换文件夹的操作。如下图所示：</li>
+</ul>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/phpenvir.png" alt=""></p>
+<ul>
+<li>我们之所以在<strong>bin文件夹</strong>所在位置打开命令提示符，是因为我们的<code>httpd指令</code>位于该文件夹中，如果你希望在任何目录下都可以运行我们的<code>httpd指令</code>（即不需要再每次都切换到<strong>bin目录</strong>去操作），这时则需要我们去设置一下<strong>环境变量</strong>，具体流程如下：</li>
+</ul>
+<ol>
+<li>右键点击<strong>计算机</strong>属性（或者快捷键<code>Win+PauseBreak</code>）打开<strong>计算机系统</strong>界面</li>
+<li>打开界面内的<strong>更改设置</strong></li>
+<li>打开<strong>高级</strong>下面的<strong>环境变量</strong></li>
+<li>打开<strong>系统变量</strong>中的<code>PATH</code></li>
+<li><strong>新增</strong>环境变量，将安装的Apache完整的bin目录填写进去，然后将打开的窗口逐一<strong>确认</strong>即可（从图中可以看出<strong>win10</strong>操作系统中环境变量是按行排列的，而<strong>win7</strong>操作系统中环境变量好像是全在一行，所以配置环境变量的时候还应该在末尾加个<code>;</code>以用来区分不同的环境变量）。</li>
+</ol>
+<p>具体参照下图：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/phpenvir2.png" alt=""></p>
+<h1 id="PHP安装"><a href="#PHP安装" class="headerlink" title="PHP安装"></a>PHP安装</h1><p>Apache安装好之后，在下载PHP开发软件之前，先向<code>httpd.conf</code>文件中写入PHP支持模块。<br>打开httpd.conf文件， <code>Crtl+F</code></p>
+<pre><code>DirectoryIndex index.html
+</code></pre><p>将其修改为</p>
+<pre><code>#修改首页面文件类型支持
+DirectoryIndex index.html index.htm index.php
+</code></pre><p>然后，在文件尾部添加下面的内容：</p>
+<pre><code>#让Apache支持PHP
+LoadModule php7_module &quot;D:/phpenvir/php7.1.1/php7apache2_4.dll&quot;    
+#告诉Apache php.ini的位置
+PHPIniDir  &quot;D:/phpenvir/php7.1.1&quot;    
+AddType application/x-httpd-php .php .html .htm
+</code></pre><p>写好之后保存文件。</p>
+<blockquote>
+<p>注意一点，上面添加的内容需要根据自己接下来将要安装的PHP软件版本进行修改，我这里安装的<strong>PHP7.1.1</strong>版本和<strong>Apache2.4.25</strong>版本，要确保能够在下载好的PHP文件夹中找到<strong>D:/phpenvir/php7.1.1/php7apache2_4.dll</strong>和<strong>D:/phpenvir/php7.1.1/php.ini</strong>这两个文件,而<code>php.ini</code>文件是从<code>php.ini-development</code>文件复制而来的，下文会提及到.</p>
+</blockquote>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/phpenvir6.png" alt=""></p>
+<p>接下来，开始下载PHP开发工具。</p>
+<p>官网下载链接：<a href="http://php.net/downloads.php" target="_blank" rel="noopener">点击此处下载</a></p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post2_6.png" alt=""></p>
+<p>从图中可以看到有<code>Non Thread Safe</code>和<code>Thread Safe</code>两个版本，我们需要下载<code>Thread Safe</code>的PHP环境。</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post2_7.png" alt=""></p>
+<p>下载完成之后将其解压到之前指定好的文件夹<code>D:/phpenvir/php7.1.1</code>中。</p>
+<p>然后，将php7.1.1目录下的<code>php.ini-development</code>文件重命名为<code>php.ini</code>，用<code>Editplus</code>打开，<code>Crtl+F</code></p>
+<pre><code>;extension_dir=&quot;ext&quot;
+</code></pre><p>将其修改为：</p>
+<pre><code>#去掉前面的分号，并且将地址更改为自己的安装位置
+extension_dir=&quot;D:/phpenvir/php7.1.1/ext&quot;
+</code></pre><p>接着<code>Crtl+F</code></p>
+<pre><code>;extension=php_mysqli.dll  
+#将前面的分号去掉，这样PHP便可以支持mysqli扩展
+</code></pre><p>根据开发的不同需求，可以去掉各种<strong>扩展</strong>前面的分号，我们这里先去掉一些能用得到的（前面不带分号的即为自己启用的扩展）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">;extension=php_bz2.dll </span><br><span class="line">extension=php_curl.dll</span><br><span class="line">;extension=php_fileinfo.dll</span><br><span class="line">;extension=php_ftp.dll </span><br><span class="line">extension=php_gd2.dll</span><br><span class="line">;extension=php_gettext.dll</span><br><span class="line">;extension=php_gmp.dll</span><br><span class="line">;extension=php_intl.dll</span><br><span class="line">;extension=php_imap.dll</span><br><span class="line">;extension=php_interbase.dll</span><br><span class="line">;extension=php_ldap.dll</span><br><span class="line">extension=php_mbstring.dll</span><br><span class="line">;extension=php_exif.dll      ; Must be after mbstring as it depends on it</span><br><span class="line">extension=php_mysqli.dll</span><br><span class="line">;extension=php_oci8_12c.dll  ; Use with Oracle Database 12c Instant Client</span><br><span class="line">;extension=php_openssl.dll</span><br><span class="line">;extension=php_pdo_firebird.dll</span><br><span class="line">;extension=php_pdo_mysql.dll</span><br><span class="line">;extension=php_pdo_oci.dll</span><br><span class="line">;extension=php_pdo_odbc.dll</span><br><span class="line">;extension=php_pdo_pgsql.dll</span><br><span class="line">;extension=php_pdo_sqlite.dll</span><br><span class="line">;extension=php_pgsql.dll</span><br><span class="line">;extension=php_shmop.dll</span><br></pre></td></tr></table></figure>
+<p><strong>测试</strong>：</p>
+<p>在Apache目录下的<code>htdocs</code>文件夹中新建Index.php文件，填入以下代码：</p>
+<pre><code>php
+&lt;?php
+    phpinfo();
+?&gt;
+</code></pre><p>保存之后，在浏览器中输入：<a href="http://localhost/index.php" target="_blank" rel="noopener">http://localhost/index.php</a><br>如果出现如下页面，则证明PHP安装成功。</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/phpenvir7.png" alt=""></p>
+<blockquote>
+<p>从上面这个页面中，你可以很清楚地看到自己安装的<strong>PHP版本</strong>和<strong>Apache版本</strong>信息，包括各种扩展功能。</p>
+</blockquote>
+<h1 id="MySQL安装"><a href="#MySQL安装" class="headerlink" title="MySQL安装"></a>MySQL安装</h1><p>官网下载链接：<a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">点击此处下载</a></p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post2_9.png" alt=""></p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post2_10.png" alt=""></p>
+<p>这里有两个版本<code>msi</code>和<code>zip</code>.<br><code>msi</code>格式的是我们平时经常使用的那种，可以直接点击安装，按照给出的提示进行安装。而<code>Zip</code>格式的则需要自己去解压，然后使用命令行进行相关配置，才能够使用。</p>
+<p>我个人下载安装的是<code>msi</code>格式的，安装方式比较简单，根据提示一步步安装即可，下面有两个教程对于<strong>MySQL安装</strong>已经解释得很清楚，这里我便不再多做赘述。</p>
+<p>将MySQL安装完成以后，PHP环境配置就大致完成了，需要注意的一点是平时写的php文件要放在Apache目录下的<code>htdocs</code>文件夹下，例如我这里是<code>D:/phpenvir/Apache2.4.25/htdocs</code>文件夹。如果想要自定义一个存放文件夹，还需要在<code>httpd.conf</code>中进行修改，具体操作可以去参考网上的方法。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000003409708" target="_blank" rel="noopener">PHP环境搭建</a></li>
+<li><a href="http://jingyan.baidu.com/article/67662997305dcd54d51b84d4.html" target="_blank" rel="noopener">MySQL安装教程（msi格式）</a></li>
+<li><a href="http://jingyan.baidu.com/article/f3ad7d0ffc061a09c3345bf0.html" target="_blank" rel="noopener">MySQL安装教程（zip格式）</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/08/『开博啦』·致自己的第一篇博客/" rel="next" title="『开博啦』·致自己的第一篇博客">
+                <i class="fa fa-chevron-left"></i> 『开博啦』·致自己的第一篇博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/26/线性表/" rel="prev" title="线性表">
+                线性表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjI0OC8xMjc4Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg"
+                alt="VitaHeng" />
+            
+              <p class="site-author-name" itemprop="name">VitaHeng</p>
+              <p class="site-description motion-element" itemprop="description">我们养成习惯，习惯造就我们</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ai-heng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:ai.heng.dev@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Ai-heng.dev/activities" target="_blank" title="知乎"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Apache安装"><span class="nav-number">1.</span> <span class="nav-text">Apache安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP安装"><span class="nav-number">2.</span> <span class="nav-text">PHP安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL安装"><span class="nav-number">3.</span> <span class="nav-text">MySQL安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VitaHeng</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+<br/>
+<i class="fa fa-user"></i><span id="busuanzi_container_site_uv">
+  第&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;位访客
+</span>&nbsp;|&nbsp;<i class="fa fa-eye"></i><span id="busuanzi_container_site_pv">
+    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+</span>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>

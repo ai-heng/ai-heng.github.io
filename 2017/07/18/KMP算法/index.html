@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="写在前面的话  看了眼第一次写这篇文章的时间，是4/12，现在已经是7/1了，还没发表，也是够尴尬了吧，很多事情，就是这样，一旦你拖了下去，就再没有继续的时候，迄今为止，其实这篇文章依旧尚未终结，我还差了一个具体事例讲解，先发表出来挖个坑吧，等到考完试填了。">
+<meta name="keywords" content="KMP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KMP算法">
+<meta property="og:url" content="http://yoursite.com/2017/07/18/KMP算法/index.html">
+<meta property="og:site_name" content="衡仔的技术小窝">
+<meta property="og:description" content="写在前面的话  看了眼第一次写这篇文章的时间，是4/12，现在已经是7/1了，还没发表，也是够尴尬了吧，很多事情，就是这样，一旦你拖了下去，就再没有继续的时候，迄今为止，其实这篇文章依旧尚未终结，我还差了一个具体事例讲解，先发表出来挖个坑吧，等到考完试填了。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post14_1.jpg">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post14_1.jpg">
+<meta property="og:updated_time" content="2017-08-03T08:55:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KMP算法">
+<meta name="twitter:description" content="写在前面的话  看了眼第一次写这篇文章的时间，是4/12，现在已经是7/1了，还没发表，也是够尴尬了吧，很多事情，就是这样，一旦你拖了下去，就再没有继续的时候，迄今为止，其实这篇文章依旧尚未终结，我还差了一个具体事例讲解，先发表出来挖个坑吧，等到考完试填了。">
+<meta name="twitter:image" content="http://opznmu7n5.bkt.clouddn.com/post14_1.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/18/KMP算法/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>KMP算法 | 衡仔的技术小窝</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">衡仔的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/KMP算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VitaHeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="衡仔的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">KMP算法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-07-18 17:35:00" itemprop="dateCreated datePublished" datetime="2017-07-18T17:35:00+08:00">2017-07-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-08-03 16:55:00" itemprop="dateModified" datetime="2017-08-03T16:55:00+08:00">2017-08-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据结构/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/07/18/KMP算法/" class="leancloud_visitors" data-flag-title="KMP算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>写在前面的话</strong></p>
+</blockquote>
+<p>看了眼第一次写这篇文章的时间，是4/12，现在已经是7/1了，还没发表，也是够尴尬了吧，很多事情，就是这样，一旦你拖了下去，就再没有继续的时候，迄今为止，其实这篇文章依旧尚未终结，我还差了一个具体事例讲解，先发表出来挖个坑吧，等到考完试填了。</p>
+<a id="more"></a>
+<p><strong>7/18：</strong>更新…</p>
+<blockquote>
+<p><strong>正文</strong></p>
+</blockquote>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>子串的定位运算通常称为串的<strong>模式匹配/串匹配</strong>。著名的模式匹配算法是<strong>BF算法</strong>和<strong>KMP算法</strong>。</p>
+<h1 id="BF算法"><a href="#BF算法" class="headerlink" title="BF算法"></a>BF算法</h1><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ul>
+<li><p>分别利用计数指针i和j指示主串S和模式T中当前正待比较的字符位置，i初值为pos，j初值为1。</p>
+</li>
+<li><p>如果两个串均未比较到串尾，即i和j分别小于等于S和T的长度时，则循环执行以下操作：</p>
+</li>
+</ul>
+<ol>
+<li>S.ch[i]和T.ch[j]比较，若相等，则i和j分别指示串中下个位置，继续比较后续字符。</li>
+<li>若不等，指针后退重新开始匹配，从主串的下一个字符(i-j+2)起再重新和模式的第一个字符(j=1)比较。</li>
+</ol>
+<ul>
+<li>如果j&gt;T.length，说明模式T中的每个字符依次和主串S中的一个连续的字符序列相等，则匹配成功，返回和模式T中第一个字符相等的字符在主串S中的序号(i-T.length);否则称匹配不成功，返回0。</li>
+</ul>
+<h2 id="源代码表示"><a href="#源代码表示" class="headerlink" title="源代码表示"></a>源代码表示</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Index</span><span class="params">(SString S, SString T, <span class="keyword">int</span> pos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i=pos,j=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i&lt;=S.length &amp;&amp; j&lt;=T.length)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (S.ch[i]==T.ch[j])</span><br><span class="line">            &#123;++i;++j;&#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;i=i-j+<span class="number">2</span>;j=<span class="number">1</span>;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (j&gt;T.length)     <span class="keyword">return</span> i-T.length;</span><br><span class="line">    <span class="keyword">else</span>    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><h2 id="改进之处"><a href="#改进之处" class="headerlink" title="改进之处"></a>改进之处</h2><p>每当一趟匹配过程中出现字符比较不相等时，不需回溯i指针，而是利用已经得到的“部分匹配”的结果将模式串向右“滑动”尽可能远的一段距离后，继续进行比较。</p>
+<p>假设主串为$ s_1s_2{\cdots}s_n $，模式串为$ p_1p_2{\cdots}p_m $</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>当主串中第i个字符与模式串中第j个字符“失配”时，主串中的第i个字符应与模式串中哪个字符进行比较？</p>
+<p>假设此时应与模式中第k（k &lt; j）个字符继续比较，则须满足关系式：<br>$$<br>p_1p_2{\cdots}p_{k-1} = s_{i-k+1}s_{i-k+2}{\cdots}s_{i-1}\\<br>已得到的结果：\\<br>p_{j-k+1}p_{j-k+2}{\cdots}p_{j-1} = s_{i-k+1}s_{i-k+2}{\cdots}s_{i-1}\\<br>可以推出，须满足：\\<br>p_1p_2{\cdots}p_{k-1} = p_{j-k+1}p_{j-k+2}{\cdots}p_{j-1}<br>$$<br>其中关联如图所示：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post14_1.jpg" alt=""></p>
+<p>若令$ next[j]=k $，则<strong>next[j]</strong>表明当模式串中第j个字符与主串中相应字符“失配”时，在该模式串中需要重新和主串中该字符进行比较的字符的位置。</p>
+<h2 id="模式串中的next函数"><a href="#模式串中的next函数" class="headerlink" title="模式串中的next函数"></a>模式串中的next函数</h2><p>$$<br>next[j]=<br>\begin{cases}<br>0,j=1 &amp; \text{($p_1$与$s_i$比较不等时，下一步进行$p_i$和$s_{i+1}$的比较)} \\<br>Max[k|1&lt;k&lt;j] &amp; \text{(满足<br>$ p_1p_2{\cdots}p_{k-1}=p_{j-k+1}p_{j-k+2}{\cdots}p_{j-1} $ 的最大k值)}\\<br>1,k=1 &amp; \text{(不存在相同子串，下一步进行$p_1$和$s_i$的比较)}<br>\end{cases}<br>$$</p>
+<h2 id="如何求next函数值"><a href="#如何求next函数值" class="headerlink" title="如何求next函数值"></a>如何求next函数值</h2><ul>
+<li>$ next[1]=0 $; 表明主串从下一字符$s_{i+1}$起和模式串重新开始匹配。   $ i=i+1;j=1 $ ;</li>
+<li>设$ next[j]=k $, 则$ next[j+1]=? $</li>
+</ul>
+<p><strong>a：</strong> 若$ p_k=p_j $，则有<br>$$<br>p_1p_2{\cdots}p_{k-1}p_k = p_{j-k+1}p_{j-k+2}{\cdots}p_{j-1}p_j<br>$$<br>说明$ next[j+1]=k+1=next[j]+1 $。</p>
+<p><strong>b：</strong> 若$ p_k{\neq}p_j $，可把求next值问题看成是一个模式匹配问题，整个模式串既是主串，又是子串。则需往前回溯，检查是否$ p_j=p_{next[k]} $,</p>
+<p>若相等，则$ next[j+1]=next[k]+1 $;</p>
+<p>若不等，检查是否$ p_j=p_{next[next[k]]} $，直到$ next[j+1]=1 $为止。</p>
+<h2 id="源代码表示-1"><a href="#源代码表示-1" class="headerlink" title="源代码表示"></a>源代码表示</h2><h3 id="KMP算法-1"><a href="#KMP算法-1" class="headerlink" title="KMP算法"></a>KMP算法</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Index_KMP</span><span class="params">(SString S,SString T, <span class="keyword">int</span> pos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    i=pos,j=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i&lt;=S.length &amp;&amp; j&lt;=T.length)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (j==<span class="number">0</span> || S.ch[i]==T.ch[j])</span><br><span class="line">            &#123;++i;++j;&#125;</span><br><span class="line">        <span class="keyword">else</span>    j=next[j];          <span class="comment">//模式串向右移动</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (j&gt;T.length)     <span class="keyword">return</span> i-T.length;</span><br><span class="line">    <span class="keyword">else</span>        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="计算next函数值"><a href="#计算next函数值" class="headerlink" title="计算next函数值"></a>计算next函数值</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get_next</span><span class="params">(SString T, <span class="keyword">int</span> next[])</span></span></span><br><span class="line"><span class="function"></span>&#123;<span class="comment">//求模式串T的next函数值并存入数组next</span></span><br><span class="line">    i=<span class="number">1</span>;next[<span class="number">1</span>]=<span class="number">0</span>;j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i&lt;T.length)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (j==<span class="number">0</span> || T.ch[i]==T.ch[j])</span><br><span class="line">            &#123;++i;++j;next[i]=j;&#125;</span><br><span class="line">            <span class="keyword">else</span> j=next[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h2><p><strong>求串′ababaaababaa′的next数组:</strong></p>
+<p><strong>先给出答案：</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">j</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">10</th>
+<th style="text-align:center">11</th>
+<th style="text-align:center">12</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">模式串</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">a</td>
+</tr>
+<tr>
+<td style="text-align:center">Next[j]</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>计算过程：</strong></p>
+<p>next数组值的计算依据下面的<strong>分段函数</strong>，</p>
+<p>$$<br>next[j]=<br>\begin{cases}<br>0,j=1 &amp; \text{($p_1$与$s_i$比较不等时，下一步进行$p_i$和$s_{i+1}$的比较)} \\<br>Max[k|1&lt;k&lt;j] &amp; \text{(满足<br>$ p_1p_2{\cdots}p_{k-1}=p_{j-k+1}p_{j-k+2}{\cdots}p_{j-1} $ 的最大k值)}\\<br>1,k=1 &amp; \text{(不存在相同子串，下一步进行$p_1$和$s_i$的比较)}<br>\end{cases}<br>$$</p>
+<blockquote>
+<p><strong>最大k值</strong>代表当模式中第j个字符与主串中第i个字符“失配”时，在该模式串中需要重新和主串中第i个字符进行<strong>比较的字符位置，最大k值与最终求得的next[j]值是相等的</strong>。</p>
+</blockquote>
+<p><strong>一定要注意观察分段函数第二段求max[k]时的满足条件，模式串中的最大相同子串应该满足：</strong></p>
+<p>$$<br>p_1p_2{\cdots}p_{k-1}=p_{j-k+1}p_{j-k+2}{\cdots}p_{j-1}<br>$$</p>
+<p>所以k值很关键，要找到一个<strong>最大k值</strong>，满足上式。</p>
+<p>它是根据下面这张图片推出来的，假设主串为$s_1s_2···s_n$，模式串为$p_1p_2···p_m$，此时图片中对应的情形是<strong>主串中第i个字符与模式中第j个字符“失配”</strong>：<br><img src="http://opznmu7n5.bkt.clouddn.com/post14_1.jpg" alt=""></p>
+<p><strong>下面结合这道题具体分析：</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">j</th>
+<th style="text-align:center">模式串</th>
+<th style="text-align:center">对应分段函数</th>
+<th style="text-align:center">最大相同子串数</th>
+<th style="text-align:center">最大k值</th>
+<th style="text-align:center">对应子串</th>
+<th style="text-align:center">next[j]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">第一段</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">第三段</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">第三段</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">第二段</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">$ p_1=p_3 $</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">第二段</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">$ p_1p_2=p_2p_3 $</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">第二段</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">$ p_1p_2p_3=p_3p_4p_5 $</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">第二段</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">$ p_1=p_6 $</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">第二段</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">$ p_1=p_7 $</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">第二段</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">$ p_1p_2=P_7p_8 $</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">第二段</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">$ p_1p_2p_3=p_7p_8p_9 $</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">第二段</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">$ p_1p_2p_3p_4=p_7p_8p_9p_{10} $</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:center">12</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">第二段</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">$ p_1p_2p_3p_4p_5=p_7p_8p_9p_{10}p_{11} $</td>
+<td style="text-align:center">6</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>写在后面的话</strong></p>
+</blockquote>
+<p>从这篇文章中可以看出来，里面的一些公式在<strong>hexo</strong>没有成功渲染出来，从网上查了下，好像是Markdown自带的 mathjax与hexo的公式渲染会有冲突，一些关键地方我先用图片代替了，先在这挖个坑，日后去解决这个问题…</p>
+<p><strong>8/3：</strong>补坑，把上面提到的这个问题解决了，也将图片又还原成公式了，这次没有问题，具体解决方法在这里：<br><a href="http://www.ai-heng.cn/2017/08/03/hexo%E5%8D%9A%E5%AE%A2MathJax%E5%85%AC%E5%BC%8F%E6%B8%B2%E6%9F%93%E9%97%AE%E9%A2%98/" target="_blank" rel="noopener">hexo博客MathJax公式渲染问题</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/KMP/" rel="tag"># KMP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/16/大二暑假/" rel="next" title="大二暑假">
+                <i class="fa fa-chevron-left"></i> 大二暑假
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/19/雇员管理系统-解析/" rel="prev" title="雇员管理系统-解析">
+                雇员管理系统-解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjI0OC8xMjc4Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg"
+                alt="VitaHeng" />
+            
+              <p class="site-author-name" itemprop="name">VitaHeng</p>
+              <p class="site-description motion-element" itemprop="description">我们养成习惯，习惯造就我们</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ai-heng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:ai.heng.dev@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Ai-heng.dev/activities" target="_blank" title="知乎"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BF算法"><span class="nav-number">2.</span> <span class="nav-text">BF算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">2.1.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源代码表示"><span class="nav-number">2.2.</span> <span class="nav-text">源代码表示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#KMP算法"><span class="nav-number">3.</span> <span class="nav-text">KMP算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#改进之处"><span class="nav-number">3.1.</span> <span class="nav-text">改进之处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">3.2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模式串中的next函数"><span class="nav-number">3.3.</span> <span class="nav-text">模式串中的next函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何求next函数值"><span class="nav-number">3.4.</span> <span class="nav-text">如何求next函数值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源代码表示-1"><span class="nav-number">3.5.</span> <span class="nav-text">源代码表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#KMP算法-1"><span class="nav-number">3.5.1.</span> <span class="nav-text">KMP算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算next函数值"><span class="nav-number">3.5.2.</span> <span class="nav-text">计算next函数值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例分析"><span class="nav-number">3.6.</span> <span class="nav-text">实例分析</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VitaHeng</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+<br/>
+<i class="fa fa-user"></i><span id="busuanzi_container_site_uv">
+  第&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;位访客
+</span>&nbsp;|&nbsp;<i class="fa fa-eye"></i><span id="busuanzi_container_site_pv">
+    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+</span>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>

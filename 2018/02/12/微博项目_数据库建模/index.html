@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="利用两周时间看完了一个仿微博项目视频，希望对其中的一些流程及设计思路等方面加以整理分析，加深自己的印象，并形成自己的一套方法。">
+<meta name="keywords" content="PHP,Mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微博项目_数据库建模">
+<meta property="og:url" content="http://yoursite.com/2018/02/12/微博项目_数据库建模/index.html">
+<meta property="og:site_name" content="衡仔的技术小窝">
+<meta property="og:description" content="利用两周时间看完了一个仿微博项目视频，希望对其中的一些流程及设计思路等方面加以整理分析，加深自己的印象，并形成自己的一套方法。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post29_1.png">
+<meta property="og:updated_time" content="2018-02-12T03:30:49.385Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微博项目_数据库建模">
+<meta name="twitter:description" content="利用两周时间看完了一个仿微博项目视频，希望对其中的一些流程及设计思路等方面加以整理分析，加深自己的印象，并形成自己的一套方法。">
+<meta name="twitter:image" content="http://opznmu7n5.bkt.clouddn.com/post29_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/12/微博项目_数据库建模/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>微博项目_数据库建模 | 衡仔的技术小窝</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">衡仔的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/12/微博项目_数据库建模/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VitaHeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="衡仔的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微博项目_数据库建模
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-12 11:20:00 / 修改时间：11:30:49" itemprop="dateCreated datePublished" datetime="2018-02-12T11:20:00+08:00">2018-02-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/12/微博项目_数据库建模/" class="leancloud_visitors" data-flag-title="微博项目_数据库建模">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>利用两周时间看完了一个仿微博项目视频，希望对其中的一些流程及设计思路等方面加以<br>整理分析，加深自己的印象，并形成自己的一套方法。</p>
+<a id="more"></a>
+<p>下面是该项目教程资源链接：<br>百度云链接：<a href="https://pan.baidu.com/s/1bqf6qWB" target="_blank" rel="noopener">基于ThinkPHP仿微博项目实战</a><br>提取密码：halz</p>
+<p>在具体去用编程实现一个微博项目之前，首要做好的是数据库方面的建模。这样，对于整个项目的轮廓和构架能够有一个更为清晰得认识和了解，对于后续的项目展开有很大的帮助。</p>
+<h1 id="表的设计"><a href="#表的设计" class="headerlink" title="表的设计"></a>表的设计</h1><h2 id="用户表"><a href="#用户表" class="headerlink" title="用户表"></a>用户表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字段名</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">是否为空</th>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id</td>
+<td style="text-align:center">用户id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">PRIMARY KEY</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center">AUTO_INCREMENT</td>
+</tr>
+<tr>
+<td style="text-align:center">account</td>
+<td style="text-align:center">账号</td>
+<td style="text-align:center">VARCHAR(20)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">UNIQUE</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">password</td>
+<td style="text-align:center">密码</td>
+<td style="text-align:center">VARCHAR(32)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">registime</td>
+<td style="text-align:center">注册时间</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">lock</td>
+<td style="text-align:center">是否锁定</td>
+<td style="text-align:center">TINYINT(1) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="用户信息表"><a href="#用户信息表" class="headerlink" title="用户信息表"></a>用户信息表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字段名</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">是否为空</th>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id</td>
+<td style="text-align:center">用户信息id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">PRIMARY KEY</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center">AUTO_INCREMENT</td>
+</tr>
+<tr>
+<td style="text-align:center">username</td>
+<td style="text-align:center">用户名</td>
+<td style="text-align:center">VARCHAR(45)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">truename</td>
+<td style="text-align:center">真实名</td>
+<td style="text-align:center">VARCHAR(45)</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">sex</td>
+<td style="text-align:center">性别</td>
+<td style="text-align:center">ENUM(‘男’,’女’)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">男</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">location</td>
+<td style="text-align:center">居住地</td>
+<td style="text-align:center">VARCHAR(45)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">constellation</td>
+<td style="text-align:center">星座</td>
+<td style="text-align:center">VARCHAR(45)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">intro</td>
+<td style="text-align:center">简介</td>
+<td style="text-align:center">VARCHAR(100)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">face</td>
+<td style="text-align:center">头像</td>
+<td style="text-align:center">VARCHAR(60)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">follow</td>
+<td style="text-align:center">关注</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">fans</td>
+<td style="text-align:center">粉丝</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">weibo</td>
+<td style="text-align:center">微博</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">uid</td>
+<td style="text-align:center">用户id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="私信表"><a href="#私信表" class="headerlink" title="私信表"></a>私信表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字段名</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">是否为空</th>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id</td>
+<td style="text-align:center">私信id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">PRIMARY KEY</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center">AUTO_INCREMENT</td>
+</tr>
+<tr>
+<td style="text-align:center">from</td>
+<td style="text-align:center">发信用户</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">content</td>
+<td style="text-align:center">内容</td>
+<td style="text-align:center">VARCHAR(255)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">time</td>
+<td style="text-align:center">发送时间</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">uid</td>
+<td style="text-align:center">用户id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="表"><a href="#表" class="headerlink" title="@表"></a>@表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字段名</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">是否为空</th>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id</td>
+<td style="text-align:center">@id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">PRIMARY KEY</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center">AUTO_INCREMENT</td>
+</tr>
+<tr>
+<td style="text-align:center">wid</td>
+<td style="text-align:center">微博id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">uid</td>
+<td style="text-align:center">用户id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="分组表"><a href="#分组表" class="headerlink" title="分组表"></a>分组表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字段名</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">是否为空</th>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id</td>
+<td style="text-align:center">分组id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">PRIMARY KEY</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center">AUTO_INCREMENT</td>
+</tr>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:center">分组名称</td>
+<td style="text-align:center">VARCHAR(45)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">uid</td>
+<td style="text-align:center">用户id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="关注表"><a href="#关注表" class="headerlink" title="关注表"></a>关注表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字段名</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">是否为空</th>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">follow</td>
+<td style="text-align:center">关注用户的id</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">fans</td>
+<td style="text-align:center">粉丝用户的id</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">gid</td>
+<td style="text-align:center">所属关注分组的id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="微博表"><a href="#微博表" class="headerlink" title="微博表"></a>微博表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字段名</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">是否为空</th>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id</td>
+<td style="text-align:center">微博id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">PRIMARY KEY</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center">AUTO_INCREMENT</td>
+</tr>
+<tr>
+<td style="text-align:center">content</td>
+<td style="text-align:center">内容</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">isturn</td>
+<td style="text-align:center">是否转发</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">time</td>
+<td style="text-align:center">发布时间</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">turn</td>
+<td style="text-align:center">转发次数</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">keep</td>
+<td style="text-align:center">收藏次数</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">comment</td>
+<td style="text-align:center">评论次数</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">uid</td>
+<td style="text-align:center">用户id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="图片表"><a href="#图片表" class="headerlink" title="图片表"></a>图片表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字段名</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">是否为空</th>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id</td>
+<td style="text-align:center">图片id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">PRIMARY KEY</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center">AUTO_INCREMENT</td>
+</tr>
+<tr>
+<td style="text-align:center">picture</td>
+<td style="text-align:center">图片</td>
+<td style="text-align:center">VARCHAR(60)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">wid</td>
+<td style="text-align:center">微博id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="评论表"><a href="#评论表" class="headerlink" title="评论表"></a>评论表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字段名</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">是否为空</th>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id</td>
+<td style="text-align:center">评论id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">PRIMARY KEY</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center">AUTO_INCREMENT</td>
+</tr>
+<tr>
+<td style="text-align:center">content</td>
+<td style="text-align:center">内容</td>
+<td style="text-align:center">VARCHAR(255)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">time</td>
+<td style="text-align:center">评论时间</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">uid</td>
+<td style="text-align:center">用户id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Wid</td>
+<td style="text-align:center">微博id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="收藏表"><a href="#收藏表" class="headerlink" title="收藏表"></a>收藏表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字段名</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">是否为空</th>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">id</td>
+<td style="text-align:center">收藏id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">PRIMARY KEY</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center">AUTO_INCREMENT</td>
+</tr>
+<tr>
+<td style="text-align:center">uid</td>
+<td style="text-align:center">用户id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">time</td>
+<td style="text-align:center">收藏时间</td>
+<td style="text-align:center">INT(10) UNSIGNED</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">wid</td>
+<td style="text-align:center">微博id</td>
+<td style="text-align:center">INT(11)</td>
+<td style="text-align:center">NOT NULL</td>
+<td style="text-align:center">MULTIPLE</td>
+<td style="text-align:center">NULL</td>
+</tr>
+</tbody>
+</table>
+<h1 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h1><p>表与表之间不是独立的，存在着一定的关联。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">表名</th>
+<th style="text-align:center">联系</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">用户表与用户信息表</td>
+<td style="text-align:center">1:1</td>
+<td style="text-align:center">一个用户对应着一套用户信息</td>
+</tr>
+<tr>
+<td style="text-align:center">用户表与私信表</td>
+<td style="text-align:center">1:N</td>
+<td style="text-align:center">一个用户可以发多条私信</td>
+</tr>
+<tr>
+<td style="text-align:center">用户表与分组表</td>
+<td style="text-align:center">1:N</td>
+<td style="text-align:center">一个用户可以创建多个分组</td>
+</tr>
+<tr>
+<td style="text-align:center">用户表与@表</td>
+<td style="text-align:center">1:N</td>
+<td style="text-align:center">一个用户可以被多次@</td>
+</tr>
+<tr>
+<td style="text-align:center">用户表与微博表</td>
+<td style="text-align:center">1:N</td>
+<td style="text-align:center">一个用户可以发多条微博</td>
+</tr>
+<tr>
+<td style="text-align:center">分组表与关注表</td>
+<td style="text-align:center">1:N</td>
+<td style="text-align:center">一个分组里可以有多个关注用户</td>
+</tr>
+<tr>
+<td style="text-align:center">微博表与图片表</td>
+<td style="text-align:center">1:1</td>
+<td style="text-align:center">一篇微博对应着一组图片（图片可有可无）</td>
+</tr>
+<tr>
+<td style="text-align:center">微博表与评论表</td>
+<td style="text-align:center">1:N</td>
+<td style="text-align:center">一篇微博可以有多条评论</td>
+</tr>
+<tr>
+<td style="text-align:center">微博表与收藏表</td>
+<td style="text-align:center">1:N</td>
+<td style="text-align:center">一篇微博可以被多次收藏（多个用户收藏）</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post29_1.png" alt=""></p>
+<p>通过这个项目数据库建模以及其中各个表之间的关联，让自己对于整个项目的布局有了更进一步的认识和了解。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+            <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/28/国庆节前小记/" rel="next" title="国庆节前小记">
+                <i class="fa fa-chevron-left"></i> 国庆节前小记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/12/微博项目_注册登录功能/" rel="prev" title="微博项目_登录注册功能">
+                微博项目_登录注册功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjI0OC8xMjc4Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg"
+                alt="VitaHeng" />
+            
+              <p class="site-author-name" itemprop="name">VitaHeng</p>
+              <p class="site-description motion-element" itemprop="description">我们养成习惯，习惯造就我们</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ai-heng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:ai.heng.dev@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Ai-heng.dev/activities" target="_blank" title="知乎"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#表的设计"><span class="nav-number">1.</span> <span class="nav-text">表的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户表"><span class="nav-number">1.1.</span> <span class="nav-text">用户表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户信息表"><span class="nav-number">1.2.</span> <span class="nav-text">用户信息表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#私信表"><span class="nav-number">1.3.</span> <span class="nav-text">私信表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表"><span class="nav-number">1.4.</span> <span class="nav-text">@表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分组表"><span class="nav-number">1.5.</span> <span class="nav-text">分组表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关注表"><span class="nav-number">1.6.</span> <span class="nav-text">关注表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微博表"><span class="nav-number">1.7.</span> <span class="nav-text">微博表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片表"><span class="nav-number">1.8.</span> <span class="nav-text">图片表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评论表"><span class="nav-number">1.9.</span> <span class="nav-text">评论表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#收藏表"><span class="nav-number">1.10.</span> <span class="nav-text">收藏表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类图"><span class="nav-number">2.</span> <span class="nav-text">类图</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VitaHeng</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+<br/>
+<i class="fa fa-user"></i><span id="busuanzi_container_site_uv">
+  第&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;位访客
+</span>&nbsp;|&nbsp;<i class="fa fa-eye"></i><span id="busuanzi_container_site_pv">
+    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+</span>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>

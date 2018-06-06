@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="说在前面的话  话说，平时自己也没怎么熬过夜，现在已经凌晨了，不过我还是不想睡，此刻想到最多的词汇就是不够、不够、不够，唉:-(，我也想多学会儿啊，只是总感觉什么都不够，时间不够，精力也不够，都说不要在晚上给自己定任何目标，可毕竟一个人只有在晚上夜深人静的时候，大脑才是最清醒的，更加清楚自己想要什么。期末考试临近，明天英语六级考试，最近又得忙着搞Java课程设计和计算机网络课程设计，曾经定下的目">
+<meta name="keywords" content="树,查找">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉排序树">
+<meta property="og:url" content="http://yoursite.com/2017/06/16/二叉排序树/index.html">
+<meta property="og:site_name" content="衡仔的技术小窝">
+<meta property="og:description" content="说在前面的话  话说，平时自己也没怎么熬过夜，现在已经凌晨了，不过我还是不想睡，此刻想到最多的词汇就是不够、不够、不够，唉:-(，我也想多学会儿啊，只是总感觉什么都不够，时间不够，精力也不够，都说不要在晚上给自己定任何目标，可毕竟一个人只有在晚上夜深人静的时候，大脑才是最清醒的，更加清楚自己想要什么。期末考试临近，明天英语六级考试，最近又得忙着搞Java课程设计和计算机网络课程设计，曾经定下的目">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-05T15:03:45.734Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二叉排序树">
+<meta name="twitter:description" content="说在前面的话  话说，平时自己也没怎么熬过夜，现在已经凌晨了，不过我还是不想睡，此刻想到最多的词汇就是不够、不够、不够，唉:-(，我也想多学会儿啊，只是总感觉什么都不够，时间不够，精力也不够，都说不要在晚上给自己定任何目标，可毕竟一个人只有在晚上夜深人静的时候，大脑才是最清醒的，更加清楚自己想要什么。期末考试临近，明天英语六级考试，最近又得忙着搞Java课程设计和计算机网络课程设计，曾经定下的目">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/16/二叉排序树/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>二叉排序树 | 衡仔的技术小窝</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">衡仔的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/16/二叉排序树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VitaHeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="衡仔的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">二叉排序树
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-06-16 00:08:00" itemprop="dateCreated datePublished" datetime="2017-06-16T00:08:00+08:00">2017-06-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-05 23:03:45" itemprop="dateModified" datetime="2018-05-05T23:03:45+08:00">2018-05-05</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/16/二叉排序树/" class="leancloud_visitors" data-flag-title="二叉排序树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>说在前面的话</strong></p>
+</blockquote>
+<p>话说，平时自己也没怎么熬过夜，现在已经凌晨了，不过我还是不想睡，此刻想到最多的词汇就是<strong>不够、不够、不够</strong>，唉:-(，我也想多学会儿啊，只是总感觉什么都不够，时间不够，精力也不够，都说不要在晚上给自己定任何目标，可毕竟一个人只有在晚上夜深人静的时候，大脑才是最清醒的，更加清楚自己想要什么。期末考试临近，明天英语六级考试，最近又得忙着搞<strong>Java课程设计</strong>和<strong>计算机网络课程设计</strong>，曾经定下的目标又沦为空话，一次次地拖延，一次次地荒废，到现在依旧是什么都不会，终离目标越来越远。今年暑假不会待在学校培训学习了（一想起去年暑假自信满满地留在学校培训，却被自己荒废掉…），而是有些无奈地要去打暑假工，暑假过后，彼此之间的实力差距会更大，想到这里心里就不是个滋味，机遇摆在你面前，可是你却抓不住。这学期还剩两周时间，而且已经没课了，我近期的目标即是希望自己能够抓紧这段时间，保持一个平稳的心，继续前进，尽自己最大可能去做更多需要做的事情，只希望能够给自己的心灵一丝慰藉，让我看到自己从未放弃挣扎。而在这其中呢，记录技术学习博客就是很大的一方面。</p>
+<a id="more"></a>
+<p>今天呢，就在这里挖个坑，尽快将树表查找知识完善，晚安！</p>
+<p>早上起来之后开始补坑…</p>
+<p>关于本节树表内容，将涉及到几类特殊的二叉树形式，包括<strong>二叉排序树、平衡二叉树、B-树和B+树</strong>，线性表的查找更适用于<strong>静态查找表</strong>，而树表的查找更适用于<strong>动态查找表</strong>。</p>
+<h1 id="二叉排序树（二叉查找树）"><a href="#二叉排序树（二叉查找树）" class="headerlink" title="二叉排序树（二叉查找树）"></a>二叉排序树（二叉查找树）</h1><h2 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h2><p>二叉排序树或者是空树，或者是满足下列性质的二叉树：</p>
+<ol>
+<li>若其左子树非空，则左子树上所有结点的值均小于根结点的值</li>
+<li>若其右子树非空，则右子树上所有结点的值均大于根结点的值</li>
+<li>其左右子树又各是一棵二叉排序树</li>
+</ol>
+<p>中序遍历一棵二叉排序树可以得到一个结点值递增的有序序列。</p>
+<p>在对二叉树进行操作的时候，使用<strong>二叉链表</strong>作为存储结构，下面给出了<em>二叉排序树的二叉链表存储表示</em>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>	&#123;</span></span><br><span class="line">	Keytype key;				<span class="comment">//	关键字项</span></span><br><span class="line">	InfoType	otherinfo;		<span class="comment">//其他数据项 </span></span><br><span class="line">&#125;ElemType; 						<span class="comment">//每个结点的数据域的类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BSTNode</span>	&#123;</span></span><br><span class="line">	ElemType data;							<span class="comment">//每个结点的数据域包括关键字项和其他数据项</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">BSTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span>			<span class="comment">//左右孩子指针 </span></span><br><span class="line">&#125;BSTNode,*BSTree;</span><br></pre></td></tr></table></figure>
+<h2 id="查找算法："><a href="#查找算法：" class="headerlink" title="查找算法："></a>查找算法：</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BSTree <span class="title">SearchBST</span><span class="params">(BSTree T,KeyType key)</span>	</span>&#123;</span><br><span class="line">	<span class="comment">//在根指针T所指二叉排序树中递归地查找某关键字等于key的数据元素</span></span><br><span class="line">	<span class="comment">//若查找成功，则返回指向该数据元素结点的指针，否则返回空指针 </span></span><br><span class="line">	<span class="keyword">if</span> ((!T)||key==T-&gt;data.key)</span><br><span class="line">		<span class="keyword">return</span> T; 						<span class="comment">//查找结束</span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (key&lt;T-&gt;data.key)</span><br><span class="line">		<span class="keyword">return</span> SearchBST(T-&gt;lchild,key);		<span class="comment">//在左子树中继续查找</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> SearchBST(T-&gt;rchild,key);		<span class="comment">//在右子树中继续查找 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在二叉排序树上查找其关键字等于给定值的过程，恰好是走了一条从根结点到该结点的路径的过程，和给定值比较的关键字个数等于路径长度加1（或结点所在层次数）。</li>
+<li>对于需要经常进行插入、删除和查找运算的表，采用二叉排序树比较好。</li>
+</ul>
+<h2 id="插入算法："><a href="#插入算法：" class="headerlink" title="插入算法："></a>插入算法：</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertBST</span><span class="params">(BSTree &amp;T,ElemType e)</span>		</span>&#123;</span><br><span class="line">	<span class="comment">//当二叉排序树T中不存在关键字等于e.key的数据元素时，则插入该元素</span></span><br><span class="line">	<span class="keyword">if</span> (!T)	&#123;</span><br><span class="line">		<span class="comment">//T为空，找到插入位置，递归结束</span></span><br><span class="line">		BSTree S=<span class="keyword">new</span> BSTNode;		<span class="comment">//生成新结点*S</span></span><br><span class="line">		S-&gt;data=e;					<span class="comment">//数据域置为e</span></span><br><span class="line">		S-&gt;lchild=S-&gt;rchild=<span class="literal">NULL</span>;	<span class="comment">//作为叶子结点</span></span><br><span class="line">		T=S;						<span class="comment">//把新结点*S链接到已找到的插入位置 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (e.key&lt;T-&gt;data.key)</span><br><span class="line">		InsertBST(T-&gt;lchild,e);			<span class="comment">//将*S插入左子树</span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (e.key&gt;T-&gt;data.key)</span><br><span class="line">		InsertBST(T-&gt;rchild,e);			<span class="comment">//将*S插入右子树 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="生成算法："><a href="#生成算法：" class="headerlink" title="生成算法："></a>生成算法：</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreateBST</span><span class="params">(BSTree &amp;T)</span>	</span>&#123;</span><br><span class="line">	<span class="comment">//依次读入一个关键字为key的结点，将此结点插入二叉排序树T中</span></span><br><span class="line">	T=<span class="literal">NULL</span>;				<span class="comment">//将二叉排序树T初始化为空树</span></span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;e;</span><br><span class="line">	<span class="keyword">while</span> (e.key!=ENDFLAG)	&#123;	<span class="comment">//ENDFLAG为自定义常量，作为输入结束标志 </span></span><br><span class="line">		InsertBST(T,e);			<span class="comment">//调用插入算法，将此结点插入到二叉排序树T中 </span></span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;e.key; </span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="删除操作："><a href="#删除操作：" class="headerlink" title="删除操作："></a>删除操作：</h2><p>被删除的结点可能是二叉排序树中的任何结点，删除结点后，要根据其位置不同修改其双亲结点及相关结点的指针，以保持二叉排序树的特性。</p>
+<p>删除的结点有以下几种情况：</p>
+<ol>
+<li>被删除的结点是叶子，则将其双亲结点中相应指针域的值改为“空”。</li>
+<li>被删除的结点只有左子树或者只有右子树，则将其双亲结点的相应指针域的值改为“指向被删除结点的左子树或右子树”。</li>
+<li>被删除的结点既有左子树，也有右子树，则以其前驱替代之，然后再删除该前驱结点。</li>
+</ol>
+<h3 id="删除算法："><a href="#删除算法：" class="headerlink" title="删除算法："></a>删除算法：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DeleteBST</span><span class="params">(BSTree &amp;T,KeyType key)</span>	</span>&#123;</span><br><span class="line">	<span class="comment">//从二叉排序树T中删除关键字等于key的结点</span></span><br><span class="line">	p=T,f=<span class="literal">NULL</span>;					<span class="comment">//初始化</span></span><br><span class="line">	<span class="comment">/*------------下面的while循环从根开始查找关键字等于key的结点*P----------*/</span></span><br><span class="line">	<span class="keyword">while</span> (p)	&#123;</span><br><span class="line">		<span class="keyword">if</span> (p-&gt;data.key==key)	<span class="keyword">break</span>;			<span class="comment">//找到关键字等于key的结点*p，结束循环 </span></span><br><span class="line">		f=p;									<span class="comment">//*f为*p的双亲结点</span></span><br><span class="line">		<span class="keyword">if</span> (p-&gt;data.key&gt;key)	p=p-&gt;lchild;	<span class="comment">//在*p的左子树中继续查找</span></span><br><span class="line">		<span class="keyword">else</span> 	p=p-&gt;rchild;					<span class="comment">//在*p的右子树上继续查找	 </span></span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">if</span> (!p)		<span class="keyword">return</span>;							<span class="comment">//如果找不到被删结点则返回</span></span><br><span class="line">	<span class="comment">/*-----------考虑实现p所指子树内部的处理：*P左右子树均不空、无右子树、无左子树-------*/</span></span><br><span class="line">	q=p;										<span class="comment">//将被删结点p地址保存在q中</span></span><br><span class="line">	<span class="comment">//被删结点左右子树都不空</span></span><br><span class="line">	<span class="keyword">if</span> ((p-&gt;lchild)&amp;&amp;(p-&gt;rchild)) 	&#123;</span><br><span class="line">		s=p-&gt;lchild;</span><br><span class="line">		<span class="keyword">while</span> (s-&gt;rchild)	&#123;</span><br><span class="line">			<span class="comment">//在*p的左子树中继续查找其前驱结点，即最右下结点</span></span><br><span class="line">			q=s;</span><br><span class="line">			s=s-&gt;rchild; </span><br><span class="line">		&#125;</span><br><span class="line">		p-&gt;data=s-&gt;data;						<span class="comment">//s指向被删结点的前驱</span></span><br><span class="line">		<span class="keyword">if</span> (q!=p)								<span class="comment">//用于判断程序是否执行了上面的while循环</span></span><br><span class="line">			q-&gt;rchild=s-&gt;lchild;				<span class="comment">//程序执行了while循环，需要重接*q的右子树</span></span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			q-&gt;lchild=s-&gt;lchild;				<span class="comment">//未执行while循环，需要重接*p的左子树</span></span><br><span class="line">		<span class="keyword">delete</span> s;								<span class="comment">//删除前驱结点s</span></span><br><span class="line">		<span class="keyword">return</span>; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//被删结点*p无右子树</span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (!p-&gt;rchild)</span><br><span class="line">		p=p-&gt;lchild;							<span class="comment">//重接左子树 </span></span><br><span class="line">	<span class="comment">//被删结点*p无左子树 </span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (!p-&gt;lchild) </span><br><span class="line">		p=p-&gt;rchilid;							<span class="comment">//重接右子树 </span></span><br><span class="line">	<span class="comment">/*--------------将p所指的子树挂接到期双亲结点*f相应的位置--------------*/</span></span><br><span class="line">	<span class="keyword">if</span> (!f)		T=p;							<span class="comment">//被删结点为根结点</span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (q==f-&gt;lchild)	f-&gt;lchild=p;		<span class="comment">//挂接到*f的左子树位置</span></span><br><span class="line">	<span class="keyword">else</span> 		f-&gt;rchild=p;					<span class="comment">//挂接到*f的右子树位置</span></span><br><span class="line">	<span class="keyword">delete</span> q; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/树/" rel="tag"># 树</a>
+          
+            <a href="/tags/查找/" rel="tag"># 查找</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/10/线性表的查找/" rel="next" title="线性表的查找">
+                <i class="fa fa-chevron-left"></i> 线性表的查找
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/16/平衡二叉树/" rel="prev" title="平衡二叉树">
+                平衡二叉树 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjI0OC8xMjc4Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg"
+                alt="VitaHeng" />
+            
+              <p class="site-author-name" itemprop="name">VitaHeng</p>
+              <p class="site-description motion-element" itemprop="description">我们养成习惯，习惯造就我们</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ai-heng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:ai.heng.dev@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Ai-heng.dev/activities" target="_blank" title="知乎"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二叉排序树（二叉查找树）"><span class="nav-number">1.</span> <span class="nav-text">二叉排序树（二叉查找树）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义："><span class="nav-number">1.1.</span> <span class="nav-text">定义：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找算法："><span class="nav-number">1.2.</span> <span class="nav-text">查找算法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入算法："><span class="nav-number">1.3.</span> <span class="nav-text">插入算法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成算法："><span class="nav-number">1.4.</span> <span class="nav-text">生成算法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除操作："><span class="nav-number">1.5.</span> <span class="nav-text">删除操作：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除算法："><span class="nav-number">1.5.1.</span> <span class="nav-text">删除算法：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VitaHeng</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+<br/>
+<i class="fa fa-user"></i><span id="busuanzi_container_site_uv">
+  第&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;位访客
+</span>&nbsp;|&nbsp;<i class="fa fa-eye"></i><span id="busuanzi_container_site_pv">
+    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+</span>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>

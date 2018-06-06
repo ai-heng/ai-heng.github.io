@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这个问题自己很早以前便碰到了，用MathJax语法写的一些公式，在本地Markdown编译器上渲染是没问题的，可是部署到hexo博客中就出现问题了，之前我是使用图片代替公式应付过去了，今天从网上找了一下资料，发现了其问题所在，同时也解决了这个问题。">
+<meta name="keywords" content="MathJax hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo博客MathJax公式渲染问题">
+<meta property="og:url" content="http://yoursite.com/2017/08/03/hexo博客MathJax公式渲染问题/index.html">
+<meta property="og:site_name" content="衡仔的技术小窝">
+<meta property="og:description" content="这个问题自己很早以前便碰到了，用MathJax语法写的一些公式，在本地Markdown编译器上渲染是没问题的，可是部署到hexo博客中就出现问题了，之前我是使用图片代替公式应付过去了，今天从网上找了一下资料，发现了其问题所在，同时也解决了这个问题。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post22_3.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post22_8.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post22_2.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post22_1.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post22_7.png">
+<meta property="og:image" content="http://opznmu7n5.bkt.clouddn.com/post22_9.png">
+<meta property="og:updated_time" content="2018-06-06T07:15:01.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo博客MathJax公式渲染问题">
+<meta name="twitter:description" content="这个问题自己很早以前便碰到了，用MathJax语法写的一些公式，在本地Markdown编译器上渲染是没问题的，可是部署到hexo博客中就出现问题了，之前我是使用图片代替公式应付过去了，今天从网上找了一下资料，发现了其问题所在，同时也解决了这个问题。">
+<meta name="twitter:image" content="http://opznmu7n5.bkt.clouddn.com/post22_3.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/03/hexo博客MathJax公式渲染问题/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>hexo博客MathJax公式渲染问题 | 衡仔的技术小窝</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">衡仔的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/03/hexo博客MathJax公式渲染问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VitaHeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="衡仔的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">hexo博客MathJax公式渲染问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-03 12:14:00" itemprop="dateCreated datePublished" datetime="2017-08-03T12:14:00+08:00">2017-08-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-06 15:15:01" itemprop="dateModified" datetime="2018-06-06T15:15:01+08:00">2018-06-06</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/hexo/" itemprop="url" rel="index"><span itemprop="name">hexo</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/03/hexo博客MathJax公式渲染问题/" class="leancloud_visitors" data-flag-title="hexo博客MathJax公式渲染问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这个问题自己很早以前便碰到了，用<strong>MathJax语法</strong>写的一些公式，在本地<strong>Markdown编译器</strong>上渲染是没问题的，可是部署到hexo博客中就出现问题了，之前我是使用图片代替公式应付过去了，今天从网上找了一下资料，发现了其问题所在，同时也解决了这个问题。</p>
+<a id="more"></a>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>hexo默认使用<strong>hexo-renderer-marked</strong>引擎去渲染网页，它会把利用<strong>Markdown语法</strong>写的文本去转换为相应的<strong>html标签</strong>。在利用Markdown写<strong>MathJax公式</strong>的时候，经常会用到下划线<code>_</code>表示<strong>下标</strong>，但是下划线<code>_</code>会被hexo的默认引擎<strong>hexo-renderer-marked</strong>渲染成html中的<code>&lt;em&gt;</code>标签，表示<strong>斜体</strong>，这样一来，我们写的MathJax公式就被错误渲染了，也就没办法正确显示出来。</p>
+<p><strong>例如：</strong></p>
+<p>在我写的<a href="http://www.ai-heng.cn/2017/07/18/KMP%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">KMP算法</a>这篇文章中，没有解决问题之前，出现着各种渲染错误，而当你仔细观察那些错误之处时，会发现你写的<strong>MathJax公式</strong>中的下划线<code>_</code>会莫名其妙地消失。<br>下图是我利用<strong>Markdown编译器</strong>写的文本</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post22_3.png" alt=""><br>是表格的一部分，在<strong>Markdown编译器</strong>预览是正确的，如下图</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post22_8.png" alt=""><br>但是部署到<strong>hexo博客</strong>后，便出现了错误，呈现的效果如下图</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post22_2.png" alt=""><br>我们发现公式没有渲染成功，仔细观察这个式子特征，发现它和我之前写的相比，少了部分<code>_</code>,打开该网页<strong>源代码</strong>，定位到这里，如下图</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post22_1.png" alt=""><br>会发现缺少的<code>_</code>其实是被hexo的渲染引擎渲染成了html中的<code>&lt;em&gt;</code>标签，这样一来，这个公式就不完整了，那么也就不能正确显示了。</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>从上面的分析，我们可以知道问题或许出在hexo的<strong>渲染引擎</strong>上，如果渲染引擎不把公式中的一些特殊字符渲染成html标签，也就避免了这个问题。当然已经有人意识到了这个问题，并且对原先的渲染引擎进行了改进，生成了新的<strong>hexo-renderer-kramed</strong>引擎，这里是它的<a href="https://github.com/sun11/hexo-renderer-kramed" target="_blank" rel="noopener">Github页面</a>，所以我们只需要<strong>卸载</strong>默认引擎，并<strong>安装</strong>这个新的渲染引擎即可。</p>
+<pre><code>npm uninstall hexo-renderer-marked --save
+npm install hexo-renderer-kramed --save
+</code></pre><p>我之前写有一篇<a href="http://www.ai-heng.cn/2017/07/18/KMP%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">KMP算法</a>，就是在这里发现的渲染出错问题，当我把渲染引擎更换之后，发现<strong>大部分</strong>公式都正确渲染了，而从网上其他人的叙述中，也同样提到了这个问题，即是<strong>行间公式</strong>都没有问题，但是个别<strong>行内公式</strong>还会出现渲染出错，从网上找到了一个方法，解决了这一问题。<br>定位到你的<strong>博客根目录</strong>，找到<strong>../node_modules/kramed/lib/rules/inline.js</strong>文件，<br><img src="http://opznmu7n5.bkt.clouddn.com/post22_7.png" alt=""><br>进行部分修改：</p>
+<pre><code>//escape: /^\\([\\`*{}\[\]()#$+\-.!_&gt;])/,      第11行，将其修改为
+escape: /^\\([`*\[\]()#$+\-.!_&gt;])/,
+//em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,    第20行，将其修改为
+em: /^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
+</code></pre><p>它取消了该渲染引擎对<code>\,{,}</code>的转义，然后再<code>hexo clean、hexo g</code>重新部署，即可解决问题。</p>
+<blockquote>
+<p>另外需要注意一点，对于需要用到<strong>MathJax公式</strong>的文章，要在<strong>Front-matter</strong>中打开MathJax开关，例如：</p>
+</blockquote>
+<pre><code>---
+date: 2017/8/3 18:20:00
+tags: hexo
+mathjax: true
+title: hexo博客MathJax公式渲染
+---
+</code></pre><h1 id="MathJax公式语法"><a href="#MathJax公式语法" class="headerlink" title="MathJax公式语法"></a>MathJax公式语法</h1><p>下面呢，我整理总结了一番比较常用的<strong>MathJax公式语法</strong>，同时也可以用来测试一下渲染效果。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">释义</th>
+<th style="text-align:center">测试用例</th>
+<th style="text-align:center">最终效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">^</td>
+<td style="text-align:center">上标</td>
+<td style="text-align:center">x^{y^z}=(1+e^x)^{-2xy^w}</td>
+<td style="text-align:center">$ x^{y^z}=(1+e^x)^{-2xy^w} $</td>
+</tr>
+<tr>
+<td style="text-align:center">_</td>
+<td style="text-align:center">下标</td>
+<td style="text-align:center">CO_2</td>
+<td style="text-align:center">$ CO_2 $</td>
+</tr>
+<tr>
+<td style="text-align:center">\frac{分子}{分母} or 分子 \over 分母</td>
+<td style="text-align:center">分数</td>
+<td style="text-align:center">f(x,y,z)=3y^2z(3+\frac{7x+5}{1+y^2})</td>
+<td style="text-align:center">$ f(x,y,z)=3y^2z(3+\frac{7x+5}{1+y^2}) $</td>
+</tr>
+<tr>
+<td style="text-align:center">\sqrt[根指数，省略时为2]{被开方数}</td>
+<td style="text-align:center">开方</td>
+<td style="text-align:center">\sqrt{2}、\sqrt[3]{9}</td>
+<td style="text-align:center">$\sqrt{2} 、\sqrt[3]{9}$</td>
+</tr>
+<tr>
+<td style="text-align:center">\ldots</td>
+<td style="text-align:center">与文本底线对齐的省略号</td>
+<td style="text-align:center">x_1x_2{\ldots}x_n</td>
+<td style="text-align:center">$x_1x_2{\ldots}x_n$</td>
+</tr>
+<tr>
+<td style="text-align:center">\cdots</td>
+<td style="text-align:center">与文本中线对齐的省略号</td>
+<td style="text-align:center">x_1x_2{\cdots}x_n</td>
+<td style="text-align:center">$x_1x_2{\cdots}x_n$</td>
+</tr>
+<tr>
+<td style="text-align:center">\int_积分下限^积分上限(被积表达式)</td>
+<td style="text-align:center">积分</td>
+<td style="text-align:center">\int_1^n{x^2}dx</td>
+<td style="text-align:center">$ \int_1^n{x^2}dx $</td>
+</tr>
+<tr>
+<td style="text-align:center">\sum_{下标表达式}^{上标表达式} {累加表达式}</td>
+<td style="text-align:center">累加</td>
+<td style="text-align:center">\sum_{i=1}^n \frac{1}{i^2}</td>
+<td style="text-align:center">$ \sum_{i=1}^n \frac{1}{i^2} $</td>
+</tr>
+<tr>
+<td style="text-align:center">\, or \; or \quad or \qquad</td>
+<td style="text-align:center">不同宽度的空格</td>
+<td style="text-align:center">a \, b \mid a \; b \mid a \quad b \mid a \qquad b</td>
+<td style="text-align:center">$ a \, b \mid a \; b \mid a \quad b \mid a \qquad b $</td>
+</tr>
+<tr>
+<td style="text-align:center">\color{颜色}{文字}</td>
+<td style="text-align:center">更改文字颜色</td>
+<td style="text-align:center">\color{red}{红色}</td>
+<td style="text-align:center">$ \color{red}{红色} $</td>
+</tr>
+</tbody>
+</table>
+<p>上面的一些基本语法使用了<strong>行内公式</strong>， 渲染效果没有问题，下面再利用<strong>行间公式</strong>写一些较为复杂的公式。</p>
+<h2 id="分段函数"><a href="#分段函数" class="headerlink" title="分段函数"></a>分段函数</h2><p>分段函数格式为<code>f(x)=\begin{cases}语句1\\语句2\\...\end{cases}</code><br><code>\text{文字}</code>中仍可以使用<code>$公式$</code>去插入其他公式，所以可以将其结合分段函数一起使用。</p>
+<p><strong>实例：</strong><br><strong>md文本</strong></p>
+<pre><code> $$ 
+f(n)=\begin{cases}
+n/2, &amp; \text{如果$ x&lt;=2 $}\\
+3n+1, &amp; \text{如果$ x&gt;2 $}
+\end{cases}
+$$
+</code></pre><p><strong>最终效果</strong></p>
+<p>$$<br>f(n)=\begin{cases}<br>n/2, &amp; \text{如果$ x&lt;=2 $}\\<br>3n+1, &amp; \text{如果$ x&gt;2 $}<br>\end{cases}<br>$$</p>
+<h2 id="大括号和小括号"><a href="#大括号和小括号" class="headerlink" title="大括号和小括号"></a>大括号和小括号</h2><p><code>()、[]、{}</code>表示的即是符号本身，使用<code>\{\}</code>来表示<code>{}</code>。但是如果要显示大号的括号时，需要使用<code>\left</code>和<code>\right</code>命令。</p>
+<p><strong>实例：</strong></p>
+<ul>
+<li><strong>正常括号</strong></li>
+</ul>
+<p><strong>md文本</strong></p>
+<pre><code> $$
+f([\frac{1+\{x,y\}}{(\frac{x}{y}+\frac{y}{x})(u+1)}+a]^{3\2})
+$$
+</code></pre><p><strong>最终效果</strong></p>
+<p>$$<br>f([\frac{1+{x,y}}{(\frac{x}{y}+\frac{y}{x})(u+1)}+a]^{3\2})<br>$$</p>
+<ul>
+<li><strong>大括号</strong></li>
+</ul>
+<p><strong>md文本</strong></p>
+<pre><code>    $$
+f\left(
+    \left[
+        \frac{
+            1+\left\{x,y\right\}
+        }{
+        \left(
+            \frac{x}{y}+\frac{y}{x}
+        \right)
+        \left(u+1\right)
+        }+a
+    \right]^{3\2}
+\right)
+$$
+</code></pre><p><strong>最终效果</strong></p>
+<p>$$<br>f\left(<br>    \left[<br>        \frac{<br>            1+\left\{x,y\right\}<br>        }{<br>        \left(<br>            \frac{x}{y}+\frac{y}{x}<br>        \right)<br>        \left(u+1\right)<br>        }+a<br>    \right]^{3\2}<br>\right)<br>$$</p>
+<h2 id="添加删除线"><a href="#添加删除线" class="headerlink" title="添加删除线"></a>添加删除线</h2><p>使用删除线功能必须使用<strong>行间公式</strong>，删除线分为<strong>片段删除线</strong>和<strong>整段删除线</strong>，样式比较多，在这里我只列举一种比较常用的<strong>水平删除线</strong>，它属于整段删除线的一种。</p>
+<p><strong>整段删除线</strong>使用<code>\require{enclose}</code>来显示，声明整段删除线后，使用<code>\enclose{删除线效果}{字符}</code>来实现删除线效果，而<strong>水平删除线</strong>效果用关键字<code>horizontalstrike</code>。</p>
+<p><strong>实例：</strong></p>
+<p><strong>md文本</strong></p>
+<pre><code>$$
+\require{enclose}\begin{array}{}
+\enclose{horizontalstrike}{x+y}\\
+\enclose{horizontalstrike}{x*y}\\
+\end{array}
+$$
+</code></pre><p><strong>最终效果</strong></p>
+<p>$$<br>\require{enclose}\begin{array}{}<br>\enclose{horizontalstrike}{x+y}\\<br>\enclose{horizontalstrike}{x*y}\\<br>\end{array}<br>$$</p>
+<p><strong>注意事项</strong></p>
+<p>我在更换hexo的渲染引擎的时候，还出了一点问题，当我卸载了原先的渲染引擎，安装新的时，出了错误，如下图：</p>
+<p><img src="http://opznmu7n5.bkt.clouddn.com/post22_9.png" alt=""><br>它显示我的<code>npm</code>版本为<code>v4.2.0</code>，我将<code>npm</code>更新到了最新版本，再次安装，便没有问题了。</p>
+<p>通过这篇文章和<a href="http://www.ai-heng.cn/2017/07/18/KMP%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">KMP算法</a>，里面也涉及了较多的MathJax公式，从效果上来看，都没有出现什么问题，这也说明了该方法还是有一定的效果的。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://www.zybuluo.com/codeep/note/163962#6如何输入省略号" target="_blank" rel="noopener">CMD公式指导手册</a></li>
+<li><a href="http://2wildkids.com/2016/10/06/%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86Hexo%E5%92%8CMathJax%E7%9A%84%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98/#小结" target="_blank" rel="noopener">如何处理Hexo和MathJax的兼容问题</a></li>
+<li><a href="http://www.jianshu.com/p/7ab21c7f0674" target="_blank" rel="noopener">在Hexo中渲染MathJax数学公式</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MathJax-hexo/" rel="tag"># MathJax hexo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/02/修饰hexo博客/" rel="next" title="修饰hexo博客">
+                <i class="fa fa-chevron-left"></i> 修饰hexo博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/09/ThinkPHP框架学习（一）/" rel="prev" title="ThinkPHP框架学习（一）">
+                ThinkPHP框架学习（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjI0OC8xMjc4Mw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://opznmu7n5.bkt.clouddn.com/hexo_avatar.jpg"
+                alt="VitaHeng" />
+            
+              <p class="site-author-name" itemprop="name">VitaHeng</p>
+              <p class="site-description motion-element" itemprop="description">我们养成习惯，习惯造就我们</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ai-heng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:ai.heng.dev@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Ai-heng.dev/activities" target="_blank" title="知乎"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方法"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MathJax公式语法"><span class="nav-number">3.</span> <span class="nav-text">MathJax公式语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分段函数"><span class="nav-number">3.1.</span> <span class="nav-text">分段函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大括号和小括号"><span class="nav-number">3.2.</span> <span class="nav-text">大括号和小括号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加删除线"><span class="nav-number">3.3.</span> <span class="nav-text">添加删除线</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VitaHeng</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+<br/>
+<i class="fa fa-user"></i><span id="busuanzi_container_site_uv">
+  第&nbsp;<span id="busuanzi_value_site_uv"></span>&nbsp;位访客
+</span>&nbsp;|&nbsp;<i class="fa fa-eye"></i><span id="busuanzi_container_site_pv">
+    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+</span>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("s2oVMMBmDTBAzCnWz6n7tJsH-gzGzoHsz", "orbfghgqN51nC3cOn4YTGiDQ");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>
