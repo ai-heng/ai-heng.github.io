@@ -440,6 +440,17 @@
 
           
           
+             <span id="/2018/02/12/微博项目_注册登录功能(2)/" class="leancloud_visitors" data-flag-title="微博项目_注册登录功能(2).md">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -463,7 +474,7 @@
         <p>在上一节中，对于一个简单的登录注册流程进行了整理，而该小节主要对其补充几个附加功能，使其更加完善。</p>
 <a id="more"></a>
 <h1 id="验证码检验"><a href="#验证码检验" class="headerlink" title="验证码检验"></a>验证码检验</h1><p>利用TP框架附带的Verify类方法，实现验证码功能。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- register.html --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    var checkVerify = "&#123;:U('checkVerify')&#125;";</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"verify"</span>&gt;</span>验证码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"verify"</span> <span class="attr">id</span>=<span class="string">"verify"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"&#123;:U('verify')&#125;"</span> <span class="attr">width</span>=<span class="string">"80"</span> <span class="attr">height</span>=<span class="string">"25"</span> <span class="attr">id</span>=<span class="string">"verify-img"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- register.html --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> checkVerify = <span class="string">"&#123;:U('checkVerify')&#125;"</span>;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"verify"</span>&gt;</span>验证码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"verify"</span> <span class="attr">id</span>=<span class="string">"verify"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"&#123;:U('verify')&#125;"</span> <span class="attr">width</span>=<span class="string">"80"</span> <span class="attr">height</span>=<span class="string">"25"</span> <span class="attr">id</span>=<span class="string">"verify-img"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* register.js */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//点击刷新验证码</span></span><br><span class="line"><span class="keyword">var</span> verifyUrl = $(<span class="string">'#verify-img'</span>).attr(<span class="string">'src'</span>);</span><br><span class="line">$(<span class="string">'#verify-img'</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    $(<span class="keyword">this</span>).attr(<span class="string">'src'</span>,verifyUrl + <span class="string">'/'</span> +<span class="built_in">Math</span>.random());</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">'form[name=register]'</span>).validate(&#123;</span><br><span class="line">    errorElement : <span class="string">'span'</span>,</span><br><span class="line">    success : <span class="function"><span class="keyword">function</span>(<span class="params">label</span>) </span>&#123;</span><br><span class="line">        label.addClass(<span class="string">'success'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    rules : &#123;</span><br><span class="line">        verify : &#123;</span><br><span class="line">            required : <span class="literal">true</span>,</span><br><span class="line">            remote : &#123;</span><br><span class="line">                url : checkVerify,</span><br><span class="line">                type : <span class="string">'post'</span>,</span><br><span class="line">                dataType : <span class="string">'json'</span>,</span><br><span class="line">                data : &#123;</span><br><span class="line">                    verify : <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                        <span class="keyword">return</span> $(<span class="string">'#verify'</span>).val();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    messages : &#123;</span><br><span class="line">        verify : &#123;</span><br><span class="line">                required : <span class="string">'请填写验证码'</span>,</span><br><span class="line">                remote : <span class="string">'验证码不正确'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* loginController.class.php */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//获取验证码</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">verify</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//配置验证码的一些参数</span></span><br><span class="line">    $config = <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'fontsize'</span> =&gt; <span class="number">30</span>,       <span class="comment">//验证码字体大小</span></span><br><span class="line">        <span class="string">'length'</span> =&gt; <span class="number">4</span>,          <span class="comment">//验证码位数</span></span><br><span class="line">        <span class="string">'useNoise'</span> =&gt; <span class="keyword">false</span>,    <span class="comment">//关闭验证码杂点</span></span><br><span class="line">    );</span><br><span class="line">    $verify = <span class="keyword">new</span> \Think\Verify($config);</span><br><span class="line">    $verify-&gt;entry();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//异步验证验证码</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">checkVerify</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!IS_AJAX) &#123;</span><br><span class="line">        E(<span class="string">'页面不存在'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    $verify = <span class="keyword">new</span> \Think\Verify();      <span class="comment">//调用TP框架中的Verify类</span></span><br><span class="line">    $verify-&gt;reset = <span class="keyword">false</span>;             <span class="comment">//验证码检验后不被重置</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ($verify-&gt;check($_POST[<span class="string">'verify'</span>])) &#123;         <span class="comment">//check函数是TP框架封装好的检验验证码的一个方法</span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'true'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'false'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="自动登录功能"><a href="#自动登录功能" class="headerlink" title="自动登录功能"></a>自动登录功能</h1><p><img src="http://opznmu7n5.bkt.clouddn.com/post31_1.png" alt=""><br>如上图所示，当用户登录时，其中有一项<strong>下次自动登录</strong>，当用户选中时，我们需要进行一些处理，使得相同的用户下一次访问页面时，可以跳过登录页，自动登录进入首页。</p>
@@ -976,6 +987,118 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("AMtVH5MwcIFjleBeiiWebSPh-gzGzoHsz", "YI4BYHdrjYyyyoOKPHRUmWbD");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 
