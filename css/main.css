@@ -1980,7 +1980,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #db6e3b;
+  background: #ffe70a;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2756,18 +2756,4 @@ embed {
 }
 :active {
   cursor: url("http://opznmu7n5.bkt.clouddn.com/star2.ico"), auto !important;
-}
-.bg_content {
-  position: fixed;
-  top: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-}
-#canvas {
-  width: 100%;
-  height: 100%;
-}
-.header {
-  background: transparent;
 }

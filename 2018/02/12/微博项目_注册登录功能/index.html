@@ -475,7 +475,7 @@
 <blockquote>
 <p>注册页面</p>
 </blockquote>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--/practice/Home/View/Login/register.html--&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html;charset=UTF-8"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>用户注册<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"__PUBLIC__/JS/jquery-1.7.2.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"__PUBLIC__/JS/jquery-validate.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"__PUBLIC__/JS/register.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> checkAccount = <span class="string">"&#123;:U('checkAccount')&#125;"</span>;</span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> checkUname = <span class="string">"&#123;:U('checkUname')&#125;"</span>;</span></span><br><span class="line"><span class="undefined">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"&#123;:U('runRegis')&#125;"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">name</span>=<span class="string">"register"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">legend</span>&gt;</span>用户注册<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"account"</span>&gt;</span>登录账户：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"account"</span> <span class="attr">id</span>=<span class="string">"account"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"pwd"</span>&gt;</span>登录密码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"pwd"</span> <span class="attr">id</span>=<span class="string">"pwd"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"pwded"</span>&gt;</span>确认密码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"pwded"</span> <span class="attr">id</span>=<span class="string">"pwded"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"uname"</span>&gt;</span>昵称：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"uname"</span> <span class="attr">id</span>=<span class="string">"uname"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"马上注册"</span> <span class="attr">id</span>=<span class="string">"regis"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">p</span>&gt;</span>									</span><br><span class="line">		<span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--/practice/Home/View/Login/register.html--&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html;charset=UTF-8"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>用户注册<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"__PUBLIC__/JS/jquery-1.7.2.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"__PUBLIC__/JS/jquery-validate.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"__PUBLIC__/JS/register.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">		var checkAccount = "&#123;:U('checkAccount')&#125;";</span></span><br><span class="line"><span class="undefined">		var checkUname = "&#123;:U('checkUname')&#125;";</span></span><br><span class="line"><span class="undefined">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"&#123;:U('runRegis')&#125;"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">name</span>=<span class="string">"register"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">legend</span>&gt;</span>用户注册<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"account"</span>&gt;</span>登录账户：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"account"</span> <span class="attr">id</span>=<span class="string">"account"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"pwd"</span>&gt;</span>登录密码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"pwd"</span> <span class="attr">id</span>=<span class="string">"pwd"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"pwded"</span>&gt;</span>确认密码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"pwded"</span> <span class="attr">id</span>=<span class="string">"pwded"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"uname"</span>&gt;</span>昵称：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"uname"</span> <span class="attr">id</span>=<span class="string">"uname"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"马上注册"</span> <span class="attr">id</span>=<span class="string">"regis"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">p</span>&gt;</span>									</span><br><span class="line">		<span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p><strong>查漏补缺：</strong></p>
 <ol>
 <li>引入的js文件，jQuery应放置于第一个，Validate插件是基于jQuery的，所以应放于其后，根据TP框架的布局，js文件均放置于主目录下Public/Js文件夹下。</li>
@@ -946,121 +946,6 @@
     
 
   </div>
-
-<div class="bg_content">
-      <canvas id="canvas"></canvas>
- </div>
-'use strict';
-   var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-   function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-   function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-   var Circle = function () {
-      function Circle(x, y) {
-           _classCallCheck(this, Circle);
-           this.x = x;
-           this.y = y;
-           this.r = Math.random() * 10;
-           this._mx = Math.random();
-           this._my = Math.random();
-       }
-      _createClass(Circle, [{
-           key: 'drawCircle',
-           value: function drawCircle(ctx) {
-               ctx.beginPath();
-               //arc() 方法使用一个中心点和半径，为一个画布的当前子路径添加一条弧。
-               ctx.arc(this.x, this.y, this.r, 0, 360);
-               ctx.closePath();
-               ctx.fillStyle = 'rgba(204, 204, 204, 0.3)';
-               ctx.fill();
-           }
-       }, {
-           key: 'drawLine',
-           value: function drawLine(ctx, _circle) {
-               var dx = this.x - _circle.x;
-               var dy = this.y - _circle.y;
-               var d = Math.sqrt(dx * dx + dy * dy);
-               if (d < 150) {
-                   ctx.beginPath();
-                   ctx.moveTo(this.x, this.y); //起始点
-                   ctx.lineTo(_circle.x, _circle.y); //终点
-                   ctx.closePath();
-                   ctx.strokeStyle = 'rgba(204, 204, 204, 0.3)';
-                   ctx.stroke();
-               }
-           }
-       }, {
-           key: 'move',
-           value: function move(w, h) {
-               this._mx = this.x < w && this.x > 0 ? this._mx : -this._mx;
-               this._my = this.y < h && this.y > 0 ? this._my : -this._my;
-               this.x += this._mx / 2;
-               this.y += this._my / 2;
-           }
-       }]);
-       return Circle;
-   }();
-   var currentCirle = function (_Circle) {
-       _inherits(currentCirle, _Circle);
-       function currentCirle(x, y) {
-           _classCallCheck(this, currentCirle);
-           return _possibleConstructorReturn(this, (currentCirle.__proto__ || Object.getPrototypeOf(currentCirle)).call(this, x, y));
-       }
-       _createClass(currentCirle, [{
-           key: 'drawCircle',
-           value: function drawCircle(ctx) {
-               ctx.beginPath();
-               //this.r = (this.r < 14 && this.r > 1) ? this.r + (Math.random() * 2 - 1) : 2;
-               this.r = 8;
-               ctx.arc(this.x, this.y, this.r, 0, 360);
-               ctx.closePath();
-               //ctx.fillStyle = 'rgba(0,0,0,' + (parseInt(Math.random() * 100) / 100) + ')'
-               ctx.fillStyle = 'rgba(255, 77, 54, 0.6)';
-               ctx.fill();
-           }
-       }]);
-       return currentCirle;
-   }(Circle);
-   window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-   var canvas = document.getElementById('canvas');
-   var ctx = canvas.getContext('2d');
-   var w = canvas.width = canvas.offsetWidth;
-   var h = canvas.height = canvas.offsetHeight;
-   var circles = [];
-   var current_circle = new currentCirle(0, 0);
-   var draw = function draw() {
-       ctx.clearRect(0, 0, w, h);
-       for (var i = 0; i < circles.length; i++) {
-           circles[i].move(w, h);
-           circles[i].drawCircle(ctx);
-           for (j = i + 1; j < circles.length; j++) {
-               circles[i].drawLine(ctx, circles[j]);
-           }
-       }
-       if (current_circle.x) {
-           current_circle.drawCircle(ctx);
-           for (var k = 1; k < circles.length; k++) {
-               current_circle.drawLine(ctx, circles[k]);
-           }
-       }
-       requestAnimationFrame(draw);
-   };
-   var init = function init(num) {
-       for (var i = 0; i < num; i++) {
-           circles.push(new Circle(Math.random() * w, Math.random() * h));
-       }
-       draw();
-   };
-   window.addEventListener('load', init(60));
-   window.onmousemove = function (e) {
-       e = e || window.event;
-       current_circle.x = e.clientX;
-       current_circle.y = e.clientY;
-   };
-   window.onmouseout = function () {
-       current_circle.x = null;
-       current_circle.y = null;
-   };
 
   
 
